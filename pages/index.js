@@ -1,11 +1,12 @@
 import Header from "../components/Header";
 import Hero from "../components/Hero";
-import { List } from "../components/List";
+import List from "../components/List";
 import Footer from '../components/Footer'
 import Schedule from "../components/Schedule";
 import WeatherBar from "../components/WeatherBar";
 
 export default function Home(props) {
+  //simulates what will be an incoming prop from the ISR stuff
   const s = [
     {
         type: 'title',
@@ -37,13 +38,15 @@ export default function Home(props) {
     <>
       <p>Reload checker - {props.update}</p>
       <Header />
+      <span id="header"></span>
       <Hero />
       <WeatherBar temp={props.temp} icon={props.icon}/>
       <div className={"grid box-border px-8 md:grid-cols-2 grid-cols-1"}>
         <Schedule />
-        <div className={"md:mt-0 mt-4"}><List content={s} title="Lunch" /></div>
+        <div className={"md:mt-0 mt-4"}><span id="lunch"></span><List content={s} title="Lunch" /></div>
       </div>
       <div className={"my-4 mb-8 box-border px-8"}>
+        <span id="schedule"></span>
         <List title="Scheduled for Today"/>
       </div>
       <Footer />

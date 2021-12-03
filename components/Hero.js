@@ -5,7 +5,7 @@ export default function Hero() {
             <p className={"text-white text-5xl font-bold"}>Day 1</p>
         </div>
         <div className={"md:mt-0 mt-2"}>
-            <p className={"text-white"}>Beta Placeholder for Student content</p>
+            <p className={"text-white"}>Open βeta • <a className="underline" href="https://georgeparks.me">Report an Issue »</a></p>
         </div>
     </div>)
 }
