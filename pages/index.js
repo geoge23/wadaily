@@ -49,7 +49,7 @@ export default function Home(props) {
     <>
       {loading ? <div className="fixed top-0 left-0 h-screen w-screen flex justify-center items-center bg-gray-500 bg-opacity-40">
           <div style={{borderTopColor: "transparent"}}
-              class="w-16 h-16 border-4 border-blue-400 border-solid rounded-full animate-spin"></div>
+              className="w-16 h-16 border-4 border-blue-400 border-solid rounded-full animate-spin"></div>
       </div> : null}
       <Header />
       <span id="header"></span>
