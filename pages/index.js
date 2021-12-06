@@ -20,15 +20,21 @@ export default function Home(props) {
 
   function goForward() {
     setLoading(true);
-    const time = new Date(date);
-    time.setDate(time.getDate() + 1);
+    const dateArray = date.split('-').map(e => parseInt(e));
+    const time = new Date();
+    time.setMonth(dateArray[0] - 1)
+    time.setDate(dateArray[1] + 1);
+    time.setFullYear(dateArray[2] + 2000)
     updateUI(time)
   }
 
   function goBack() {
     setLoading(true);
-    const time = new Date(date);
-    time.setDate(time.getDate() - 1);
+    const dateArray = date.split('-').map(e => parseInt(e));
+    const time = new Date();
+    time.setMonth(dateArray[0] - 1)
+    time.setDate(dateArray[1] - 1);
+    time.setFullYear(dateArray[2] + 2000)
     updateUI(time)
   }
 
