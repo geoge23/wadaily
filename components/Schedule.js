@@ -1,41 +1,5 @@
-export default function Schedule() {
-    const scheduleItems = [
-        {
-            name: "First Period",
-            start: "10:00 AM",
-            end: "11:30 AM"
-        },
-        {
-            name: "Second Period",
-            start: "10:00 AM",
-            end: "11:30 AM"
-        },
-        {
-            name: "Advisory",
-            start: "10:00 AM",
-            end: "11:30 AM"
-        },
-        {
-            name: "Third Period",
-            start: "10:00 AM",
-            end: "11:30 AM"
-        },
-        {
-            name: "Lunch",
-            start: "10:00 AM",
-            end: "11:30 AM"
-        },
-        {
-            name: "Fourth Period",
-            start: "10:00 AM",
-            end: "11:30 AM"
-        },
-        {
-            name: "Fifth Period",
-            start: "10:00 AM",
-            end: "11:30 AM"
-        },
-    ]
+export default function Schedule({items: scheduleItems}) {
+    
 
     return (<div>
         {scheduleItems.map((e, i) => <ScheduleItem key={i} {...e} number={i} length={scheduleItems.length - 1} />)}
@@ -51,7 +15,7 @@ function ScheduleItem(props) {
         </svg>
         <div>
             <p className={"text-3xl font-medium text-gray-700"}>{props.name}</p>
-            <p>{props.start} to {props.end}</p>
+            <p>{props.startTime} to {props.endTime}</p>
         </div>
     </div>);
 }

@@ -18,6 +18,7 @@ function WeatherIconSelector({icon}) {
     function IconSwitch(icon) {
         switch (icon) {
             case 'Clear':
+            case 'Sunny':
                 return (<IconContext.Provider value={{ color: "#E8E84A", size: '20px' }}>
                     <BsCircleFill />
                 </IconContext.Provider>);
