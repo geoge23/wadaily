@@ -7,7 +7,6 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  MONGO_URI: ${{ secrets.MONGO_URI }}
 
 jobs:
   build-and-push-image:
@@ -35,6 +34,8 @@ jobs:
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
         with:
           context: .
           push: true
