@@ -4,7 +4,7 @@ export default function Footer() {
         <img src="gcs.png" alt="George Computer Services Logo" className={"filter invert md:h-14 h-16 w-16 md:w-min mr-3 self-center mb-3 md:mb-0"} />
         <div className="text-white md:text-lg font-medium">
             <p className="md:mb-0 mb-2">
-                This site is definitely affiliated with Woodward Academy • <a className="underline" href={"https://georgeparks.me"}>View Contributors »</a>
+                This site is definitely affiliated with Woodward Academy • <a className="underline" href={"./credits.html"} target="_blank">View Contributors »</a>
             </p>
             <span className={"flex w-full md:flex-row flex-col"}>
                     <p className={"flex"}>Copyright © George Parks 2021</p>

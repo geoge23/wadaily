@@ -1,0 +1,36 @@
+export default async function getMenuList(date) {
+    const Now = date ? new Date(date) : new Date()
+    const formattedDate = `${Now.getFullYear()}-${Now.getMonth() + 1}-${Now.getDate().toString().padStart(2, "0")}`
+    const food = await fetch(`https://woodward.nutrislice.com/menu/api/weeks/school/upper-school/menu-type/lunch/${Now.getFullYear()}/${Now.getMonth() + 1}/${Now.getDate()}`)
+    const { days } = await food.json();
+    const {menu_items:items} = days.filter(e => {
+        return e.date == (formattedDate)
+    })[0];
+    const desiredCategories = new Set(["ENTREES", "DESSERT", "SIDES"])
+    const filteredItems = [];
+    let categoryWanted = false;
+    items.forEach(e => {
+        if (e.is_section_title) {
+            if (desiredCategories.has(e.text)) {
+                categoryWanted = true;
+                filteredItems.push(e)
+            } else {
+                categoryWanted = false;
+            }
+        } else if (categoryWanted && !e.no_line_break) {
+            filteredItems.push(e)
+        }
+
+    })
+    const list = filteredItems.map(e => {
+        const a = {};
+        if (e.is_section_title) {
+            a.type = "title"
+        } else {
+            a.type = "entry"
+        }
+        a.text = e.text || e.food?.name;
+        return a;
+    })
+    return list.length != 0 ? list : [{type: 'title', text: 'No data available'}]
+}
