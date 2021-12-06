@@ -15,15 +15,18 @@ export default function Home(props) {
   const [friendlyName, setFriendlyName] = useState(props.friendlyName);
   const [calendarList, setCalendarList] = useState(props.calendarList);
   const [menuList, setMenuList] = useState(props.menuList);
+  const [loading, setLoading] = useState(false);
   const [date, setDate] = useState(props.date);
 
   function goForward() {
+    setLoading(true);
     const time = new Date(date);
     time.setDate(time.getDate() + 1);
     updateUI(time)
   }
 
   function goBack() {
+    setLoading(true);
     const time = new Date(date);
     time.setDate(time.getDate() - 1);
     updateUI(time)
@@ -39,15 +42,23 @@ export default function Home(props) {
     setMenuList(lunchList);
     setCalendarList(calendar);
     setDate(now);
+    setLoading(false);
   }
 
   return (
     <>
+      {loading ? <div className="fixed top-0 left-0 h-screen w-screen flex justify-center items-center bg-gray-500 bg-opacity-40">
+          <div style={{borderTopColor: "transparent"}}
+              class="w-16 h-16 border-4 border-blue-400 border-solid rounded-full animate-spin"></div>
+      </div> : null}
       <Header />
       <span id="header"></span>
       <Hero day={props.friendlyName} />
       <WeatherBar temp={props.temp} icon={props.icon} name={friendlyName} date={date} forward={goForward} back={goBack} />
-      {date == props.date ? null : <p className="text-center text-gray-600 mb-4 mt-0">You are viewing info for {date}</p>}
+      {date == props.date ? null : <p className="text-center text-gray-600 mb-4 mt-0">You are viewing info for {date} • <a className="cursor-pointer underline" onClick={() => {
+        setLoading(true);
+        updateUI(new Date())
+      }}>See Today</a></p>}
       <div className={"grid box-border px-8 md:grid-cols-2 grid-cols-1"}>
         <Schedule items={schedule} />
         <div className={"md:mt-0 mt-4"}><span id="lunch"></span><List content={menuList} title="Lunch" /></div>
@@ -74,7 +85,7 @@ export async function getStaticProps() {
   return {
     props: {
       temp: conditions[0].temp_F,
-      icon: conditions[0].weatherDesc[0].value,
+      icon: conditions[0].weatherDesc[0].value.split(" ")[0],
       ...scheduleList,
       menuList,
       date,

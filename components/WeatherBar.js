@@ -1,5 +1,5 @@
 import { IconContext } from "react-icons";
-import { BsCircleFill, BsQuestion, BsCloudRainFill, BsCloudFill, BsCloudSnowFill } from 'react-icons/bs';
+import { BsCircleFill, BsQuestion, BsCloudRainFill, BsCloudFill, BsCloudSnowFill, BsLightningFill } from 'react-icons/bs';
 import { RiMistFill } from 'react-icons/ri'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 
@@ -15,9 +15,9 @@ export default function WeatherBar({icon, temp, name, date: currentDate, forward
             <p className={"ml-2 text-gray-600 font-medium"}>{temp}°F • {dateString}</p>
         </div>
         <div className={"flex items-center"}>
-            <IoIosArrowBack className={"mr-2"} onClick={back}/>
+            <IoIosArrowBack className={"mr-2 cursor-pointer"} onClick={back}/>
             <p className={"text-gray-700"}>{name} - {currentDate}</p>
-            <IoIosArrowForward className={"ml-2"} onClick={forward} />
+            <IoIosArrowForward className={"ml-2 cursor-pointer"} onClick={forward} />
         </div>
     </div>)
 }
@@ -34,6 +34,10 @@ function WeatherIconSelector({icon}) {
                 return (<RiMistFill />);
             case 'Rainy':
                 return (<BsCloudRainFill />);
+            case 'Thunderstorm':
+                return (<IconContext.Provider value={{ color: "#E8E84A", size: '20px' }}>
+                <BsLightningFill />
+            </IconContext.Provider>);
             case 'Cloudy':
                 return (<BsCloudFill />);
             case 'Snowy':
