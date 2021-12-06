@@ -33,6 +33,7 @@ function WeatherIconSelector({icon}) {
             case 'Mist':
                 return (<RiMistFill />);
             case 'Rainy':
+            case 'Rain':
                 return (<BsCloudRainFill />);
             case 'Thunderstorm':
                 return (<IconContext.Provider value={{ color: "#E8E84A", size: '20px' }}>

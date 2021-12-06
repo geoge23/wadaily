@@ -1,8 +1,16 @@
+import Cache from 'node-cache'
+const foodCache = new Cache()
+
 export default async function getMenuList(date) {
     const Now = date ? new Date(date) : new Date()
     const formattedDate = `${Now.getFullYear()}-${Now.getMonth() + 1}-${Now.getDate().toString().padStart(2, "0")}`
-    const food = await fetch(`https://woodward.nutrislice.com/menu/api/weeks/school/upper-school/menu-type/lunch/${Now.getFullYear()}/${Now.getMonth() + 1}/${Now.getDate()}`)
-    const { days } = await food.json();
+    let days;
+    days = foodCache.get(formattedDate);
+    if (days == undefined) {
+        const food = await fetch(`https://woodward.nutrislice.com/menu/api/weeks/school/upper-school/menu-type/lunch/${Now.getFullYear()}/${Now.getMonth() + 1}/${Now.getDate()}`)
+        days = (await food.json()).days;
+        foodCache.set(formattedDate, days, 6000)
+    }
     const {menu_items:items} = days.filter(e => {
         return e.date == (formattedDate)
     })[0];
