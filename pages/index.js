@@ -57,6 +57,15 @@ export default function Home(props) {
           <div style={{borderTopColor: "transparent"}}
               className="w-16 h-16 border-4 border-blue-400 border-solid rounded-full animate-spin"></div>
       </div> : null}
+      <Head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-18065K9X6D"></script>
+        <script dangerouslySetInnerHTML={{__html: `window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-18065K9X6D');`}}></script>
+        <title>WADaily</title>
+      </Head>
       <Header />
       <span id="header"></span>
       <Hero day={props.friendlyName} />
