@@ -8,6 +8,7 @@ import getScheduleDay from "../functions/day";
 import getScheduleList from "../functions/schedule";
 import getMenuList from "../functions/menuList";
 import { useState } from "react";
+import Head from 'next/head';
 import getCalendarList from "../functions/calendar";
 
 export default function Home(props) {
