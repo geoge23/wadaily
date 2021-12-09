@@ -1,5 +1,5 @@
 import { IconContext } from "react-icons";
-import { BsCircleFill, BsQuestion, BsCloudRainFill, BsCloudFill, BsCloudSnowFill, BsLightningFill } from 'react-icons/bs';
+import { BsCircleFill, BsQuestion, BsCloudRainFill, BsCloudFill, BsCloudSnowFill, BsLightningFill, BsCloudSleetFill } from 'react-icons/bs';
 import { RiMistFill } from 'react-icons/ri'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 
