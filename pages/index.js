@@ -89,7 +89,7 @@ export default function Home(props) {
 }
 
 export async function getStaticProps() {
-  const weather = await fetch('http://wttr.in/ATL?format=j1');
+  const weather = await fetch('http://wttr.in/atlanta?format=j1');
   const {current_condition: conditions} = await weather.json();
   const Now = new Date();
   const date = `${Now.getMonth() + 1}-${Now.getDate()}-${Now.getFullYear() % 100}`
@@ -101,7 +101,7 @@ export async function getStaticProps() {
   return {
     props: {
       temp: conditions[0].temp_F,
-      icon: conditions[0].weatherDesc[0].value.split(" ")[0],
+      icon: parseInt(conditions[0].weatherCode),
       ...scheduleList,
       menuList,
       date,
