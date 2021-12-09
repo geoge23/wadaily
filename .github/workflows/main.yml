@@ -39,5 +39,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: ${{format('MONGO_URI={0}\nWEATHER_KEY={1}', secrets.MONGO_URI, secrets.WEATHER_KEY)}}
+          secrets: |
+            "MONGO_URI=${{ secrets.MONGO_URI }}"
+            "WEATHER_KEY=${{ secrets.WEATHER_KEY }}"
             
