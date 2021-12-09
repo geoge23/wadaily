@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/next-script-for-ga */
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import List from "../components/List";
@@ -89,8 +90,8 @@ export default function Home(props) {
 }
 
 export async function getStaticProps() {
-  const weather = await fetch('http://wttr.in/atlanta?format=j1');
-  const {current_condition: conditions} = await weather.json();
+  const weather = await fetch(`http://api.openweathermap.org/data/2.5/weather?zip=30337&appid=${process.env.WEATHER_KEY}&units=imperial`)
+  const {main: wTemp, weather: conditions} = await weather.json();
   const Now = new Date();
   const date = `${Now.getMonth() + 1}-${Now.getDate()}-${Now.getFullYear() % 100}`
   const day = await getScheduleDay(date);
@@ -100,8 +101,8 @@ export async function getStaticProps() {
   
   return {
     props: {
-      temp: conditions[0].temp_F,
-      icon: parseInt(conditions[0].weatherCode),
+      temp: Math.round(wTemp.temp),
+      icon: conditions[0].id,
       ...scheduleList,
       menuList,
       date,
