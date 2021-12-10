@@ -98,6 +98,7 @@ export async function getStaticProps() {
   const scheduleList = await getScheduleList(day);
   const menuList = await getMenuList();
   const calendarList = await getCalendarList();
+  console.log("regenerating with date", date)
   
   return {
     props: {
