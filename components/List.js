@@ -1,5 +1,5 @@
 export default function List({content = [{type: 'title', text: 'No data available'}], title}) {
-    return <div className={"text-gray-700"}>
+    return <div className={""}>
         {title ? <p className={"text-3xl font-bold mb-3"}>{title}</p> : null}
         {content.map((e, i) => {
         switch (e.type) {

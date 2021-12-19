@@ -12,11 +12,11 @@ export default function WeatherBar({icon, temp, name, date: currentDate, forward
     return (<div className={"flex md:flex-row flex-col my-3 mx-4 items-center justify-between"}>
         <div className={"flex"}>
             <WeatherIconSelector icon={icon}></WeatherIconSelector>
-            <p className={"ml-2 text-gray-600 font-medium"}>{temp}°F • {dateString}</p>
+            <p className={"ml-2 font-medium"}>{temp}°F • {dateString}</p>
         </div>
         <div className={"flex items-center"}>
             <IoIosArrowBack className={"mr-2 cursor-pointer"} onClick={back}/>
-            <p className={"text-gray-700"}>{name} - {currentDate}</p>
+            <p>{name} - {currentDate}</p>
             <IoIosArrowForward className={"ml-2 cursor-pointer"} onClick={forward} />
         </div>
     </div>)

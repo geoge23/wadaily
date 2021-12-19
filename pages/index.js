@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/next-script-for-ga */
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import List from "../components/List";
@@ -60,19 +59,13 @@ export default function Home(props) {
               className="w-16 h-16 border-4 border-blue-400 border-solid rounded-full animate-spin"></div>
       </div> : null}
       <Head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-18065K9X6D"></script>
-        <script dangerouslySetInnerHTML={{__html: `window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-18065K9X6D');`}}></script>
         <title>WADaily</title>
       </Head>
       <Header />
       <span id="header"></span>
       <Hero day={props.friendlyName} />
       <WeatherBar temp={props.temp} icon={props.icon} name={friendlyName} date={date} forward={goForward} back={goBack} />
-      {date == props.date ? null : <p className="text-center text-gray-600 mb-4 mt-0">You are viewing info for {date} • <a className="cursor-pointer underline" onClick={() => {
+      {date == props.date ? null : <p className="text-center mb-4 mt-0">You are viewing info for {date} • <a className="cursor-pointer underline" onClick={() => {
         setLoading(true);
         updateUI(new Date())
       }}>See Today</a></p>}
@@ -98,7 +91,6 @@ export async function getStaticProps() {
   const scheduleList = await getScheduleList(day);
   const menuList = await getMenuList();
   const calendarList = await getCalendarList();
-  console.log("regenerating with date", date)
   
   return {
     props: {

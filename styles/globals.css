@@ -29,3 +29,10 @@ a {
 }
 
 
+@media (prefers-color-scheme: dark) {
+  .dark-bg-none {
+    background-image: none;
+  }
+}
+
+

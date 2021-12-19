@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 function Link({func = () => {}, text}) {
-    return (<a className={"self-center ml-3 text-gray-600 text-lg font-normal cursor-pointer"} onClick={func}>{text}</a>)
+    return (<a className={"self-center ml-3 text-lg font-normal cursor-pointer"} onClick={func}>{text}</a>)
 }
 
 export default function Header() {

@@ -3,7 +3,7 @@ export default function Schedule({items: scheduleItems}) {
 
     return (<div>
         {scheduleItems.length != 0 ? scheduleItems.map((e, i) => <ScheduleItem key={i} {...e} number={i} length={scheduleItems.length - 1} />) : <div>
-            <p className={"text-center text-gray-600 text-lg"}>No Schedule Data for this day</p>
+            <p className={"text-center text-lg"}>No Schedule Data for this day</p>
             </div>}
     </div>)
 }
@@ -16,7 +16,7 @@ function ScheduleItem(props) {
             {props.number != props.length ? <line x1="12.5" y1="40" x2="12.5" y2="80" style={{stroke: '#E22626', strokeWidth: 3}}></line> : null}
         </svg>
         <div>
-            <p className={"text-3xl font-medium text-gray-700"}>{props.name}</p>
+            <p className={"text-3xl font-medium"}>{props.name}</p>
             <p>{props.startTime} to {props.endTime}</p>
         </div>
     </div>);
