@@ -17,7 +17,7 @@ export default function HeadsUp() {
 
     return (
         <>
-            {available ? <div className="w-full flex justify-center mt-2 md:flex-row flex-col text-center md:leading-normal leading-5">
+            {available ? <div className="w-full flex justify-center mt-2 md:flex-row flex-col text-center md:leading-normal leading-5 text-white">
                 <span className="font-bold mr-2">{title}</span><span> {message}</span>
             </div> : null}
         </>
