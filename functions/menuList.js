@@ -3,7 +3,7 @@ const foodCache = new Cache()
 
 export default async function getMenuList(date) {
     const Now = date ? new Date(date) : new Date()
-    const formattedDate = `${Now.getFullYear()}-${Now.getMonth() + 1}-${Now.getDate().toString().padStart(2, "0")}`
+    const formattedDate = `${Now.getFullYear()}-${(Now.getMonth() + 1).toString().padStart(2, "0")}-${Now.getDate().toString().padStart(2, "0")}`
     let days;
     days = foodCache.get(formattedDate);
     if (days == undefined) {
@@ -11,9 +11,10 @@ export default async function getMenuList(date) {
         days = (await food.json()).days;
         foodCache.set(formattedDate, days, 6000)
     }
-    const {menu_items:items} = days.filter(e => {
+    const filteredDay = days.filter(e => {
         return e.date == (formattedDate)
     })[0];
+    const items = filteredDay?.menu_items || []
     const desiredCategories = new Set(["ENTREES", "DESSERT", "SIDES"])
     const filteredItems = [];
     let categoryWanted = false;
