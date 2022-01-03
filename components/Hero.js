@@ -1,6 +1,6 @@
 import HeadsUp from "./HeadsUp";
 
-export default function Hero({day}) {
+export default function Hero({day, isDifferentDay = false}) {
     return (<div name="home" className={`
         md:justify-between justify-end box-border px-6 py-5 
         md:items-end rounded-2xl shadow-lg h-60 flex 
@@ -10,7 +10,7 @@ export default function Hero({day}) {
         relative
     `}>
         <div>
-            <p className={"text-white text-2xl font-light tracking-wider"}>Today is a</p>
+            <p className={"text-white text-2xl font-light tracking-wider"}>{isDifferentDay ? "This day is a" : "Today is a"}</p>
             <p className={"text-white text-4xl md:text-5xl font-bold"}>{day}</p>
         </div>
         <div className={"md:mt-0 mt-2"}>
