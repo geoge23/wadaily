@@ -82,7 +82,7 @@ export default function Home(props) {
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const weather = await fetch(`http://api.openweathermap.org/data/2.5/weather?zip=30337&appid=${process.env.WEATHER_KEY}&units=imperial`)
   const {main: wTemp, weather: conditions} = await weather.json();
   const Now = new Date();
@@ -100,7 +100,6 @@ export async function getStaticProps() {
       menuList,
       date,
       calendarList
-    },
-    revalidate: 60
+    }
   }
 }
