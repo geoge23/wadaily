@@ -8,8 +8,13 @@ export default async function getCalendarList(date) {
     const formattedDate = `${Now.getFullYear()}-${Now.getMonth() + 1}-${Now.getDate().toString().padStart(2, "0")}`
     let items = calCache.get(formattedDate);
     if (items == undefined) {
-        const ics = await fetch("https://www.woodward.edu/cf_calendar/feed.cfm?type=ical&feedID=69E9E2249C8A417481450E0F1F73A345")
-        const a = await ics.text()
+        let a = calCache.get('calendar-text');
+        if (a == undefined) {
+            const ics = await fetch("https://www.woodward.edu/cf_calendar/feed.cfm?type=ical&feedID=69E9E2249C8A417481450E0F1F73A345")
+            a = await ics.text()
+            calCache.set('calendar-text', a, 6000);
+        }
+        console.log(a)
         const icl = await ical.async.parseICS(a);
         items = [];
         for (let e in icl) {
