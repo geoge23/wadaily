@@ -10,6 +10,9 @@ import getMenuList from "../functions/menuList";
 import { useState } from "react";
 import Head from 'next/head';
 import getCalendarList from "../functions/calendar";
+import Cache from "node-cache";
+
+const weatherCache = new Cache();
 
 export default function Home(props) {
   const [schedule, setSchedule] = useState(props.schedule);
@@ -83,8 +86,13 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps() {
-  const weather = await fetch(`http://api.openweathermap.org/data/2.5/weather?zip=30337&appid=${process.env.WEATHER_KEY}&units=imperial`)
-  const {main: wTemp, weather: conditions} = await weather.json();
+  let weather = weatherCache.get('weather');
+  if (weather == undefined) {
+    let fetchedWeather = await fetch(`http://api.openweathermap.org/data/2.5/weather?zip=30337&appid=${process.env.WEATHER_KEY}&units=imperial`)
+    weather = await fetchedWeather.json();
+    weatherCache.set('weather', weather, 60);
+  }
+  const {main: wTemp, weather: conditions} = weather;
   const Now = new Date();
   const date = `${Now.getMonth() + 1}-${Now.getDate()}-${Now.getFullYear() % 100}`
   const day = await getScheduleDay(date);
