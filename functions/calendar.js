@@ -14,7 +14,6 @@ export default async function getCalendarList(date) {
             a = await ics.text()
             calCache.set('calendar-text', a, 6000);
         }
-        console.log(a)
         const icl = await ical.async.parseICS(a);
         items = [];
         for (let e in icl) {

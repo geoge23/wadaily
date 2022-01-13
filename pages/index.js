@@ -7,10 +7,11 @@ import WeatherBar from "../components/WeatherBar";
 import getScheduleDay from "../functions/day";
 import getScheduleList from "../functions/schedule";
 import getMenuList from "../functions/menuList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Head from 'next/head';
 import getCalendarList from "../functions/calendar";
 import Cache from "node-cache";
+import { useRouter } from "next/dist/client/router";
 
 const weatherCache = new Cache();
 
@@ -21,6 +22,17 @@ export default function Home(props) {
   const [menuList, setMenuList] = useState(props.menuList);
   const [loading, setLoading] = useState(false);
   const [date, setDate] = useState(props.date);
+  const router = useRouter()
+
+  useEffect(() => {
+    window.addEventListener('focus', () => {
+      const Now = new Date();
+      const currentDate = `${Now.getMonth() + 1}-${Now.getDate()}-${Now.getFullYear() % 100}`
+      if (props.date != currentDate) {
+        router.reload()
+      }
+    })
+  })
 
   function goForward() {
     setLoading(true);
