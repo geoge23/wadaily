@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import List from "../components/List";
@@ -56,20 +58,22 @@ export default function Home(props) {
 
   async function updateUI(time) {
     const now = `${time.getMonth() + 1}-${time.getDate()}-${time.getFullYear() % 100}`
-    const {schedule: newSchedule, friendlyName: newFriendlyName} = await (await fetch(`/api/schedule?date=${now}`)).json();
-    const lunchList = await (await fetch(`/api/lunchList?date=${now}`)).json();
-    const calendar = await (await fetch(`/api/calendar?date=${now}`)).json();
+    const {schedule: newSchedule, friendlyName: newFriendlyName, name} = await (await fetch(`/api/schedule?date=${now}`)).json();
+    if (name != "NONE") {
+      const lunchList = await (await fetch(`/api/lunchList?date=${now}`)).json();
+      const calendar = await (await fetch(`/api/calendar?date=${now}`)).json();
+      setMenuList(lunchList);
+      setCalendarList(calendar);
+    }
     setSchedule(newSchedule);
     setFriendlyName(newFriendlyName);
-    setMenuList(lunchList);
-    setCalendarList(calendar);
     setDate(now);
     setLoading(false);
   }
 
   return (
     <>
-      {loading ? <div className="fixed top-0 left-0 h-screen w-screen flex justify-center items-center bg-gray-500 bg-opacity-40">
+      {loading ? <div className="fixed z-50 top-0 left-0 h-screen w-screen flex justify-center items-center bg-gray-500 bg-opacity-40">
           <div style={{borderTopColor: "transparent"}}
               className="w-16 h-16 border-4 border-blue-400 border-solid rounded-full animate-spin"></div>
       </div> : null}
@@ -84,14 +88,26 @@ export default function Home(props) {
         setLoading(true);
         updateUI(new Date())
       }}>See Today</a></p>}
-      <div className={"grid box-border px-8 md:grid-cols-2 grid-cols-1"}>
-        <Schedule items={schedule} />
-        <div className={"md:mt-0 mt-4"}><span id="lunch"></span><List content={menuList} title="Lunch" /></div>
-      </div>
-      <div className={"my-4 mb-8 box-border px-8"}>
-        <span id="schedule"></span>
-        <List title="Scheduled for Today" content={calendarList}/>
-      </div>
+      {friendlyName != "No School Day" ?
+      <>
+        <div className={"grid box-border px-8 md:grid-cols-2 grid-cols-1"}>
+          <Schedule items={schedule} />
+          <div className={"md:mt-0 mt-4"}><span id="lunch"></span>
+            <List content={menuList} title="Lunch" />
+          </div>
+        </div>
+        <div className={"my-4 mb-8 box-border px-8"}>
+          <span id="schedule"></span>
+          <List title="Scheduled for Today" content={calendarList}/>
+        </div>
+    </> :
+    <div className="w-full flex flex-col items-center">
+      <img src="./booked.svg" alt="No school today" className="h-40" />
+      <p className="text-3xl mt-2 font-semibold">No school today!</p>
+      <p>Enjoy your break or use the arrows to navigate to the next day</p>
+      <p>If you think this is a mistake, click <a className="underline cursor-pointer" href="https://forms.gle/Cu7EjdmzA8BeM4yb8">here</a> to report</p>
+      <br></br>
+    </div>}
       <Footer />
     </>
   )
