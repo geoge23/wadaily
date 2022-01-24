@@ -79,7 +79,7 @@ export default function Home(props) {
       <Header />
       <span id="header"></span>
       <Hero day={friendlyName} isDifferentDay={date != props.date} />
-      <WeatherBar temp={props.temp} icon={props.icon} name={friendlyName} date={date} forward={goForward} back={goBack} />
+      <WeatherBar temp={props.temp} icon={props.icon} date={date} forward={goForward} back={goBack} />
       {date == props.date ? null : <p className="text-center mb-4 mt-0">You are viewing info for {date} • <a className="cursor-pointer underline" onClick={() => {
         setLoading(true);
         updateUI(new Date())

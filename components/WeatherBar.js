@@ -3,9 +3,10 @@ import { BsCircleFill, BsQuestion, BsCloudRainFill, BsCloudFill, BsCloudSnowFill
 import { RiMistFill, RiTornadoFill } from 'react-icons/ri'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 
-export default function WeatherBar({icon, temp, name, date: currentDate, forward, back}) {
+export default function WeatherBar({icon, temp, date: currentDate, forward, back}) {
     const date = new Date();
     const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
     const dateString = `${months[date.getMonth()]} ${date.getDate()}`
 
@@ -16,7 +17,7 @@ export default function WeatherBar({icon, temp, name, date: currentDate, forward
         </div>
         <div className={"flex items-center"}>
             <IoIosArrowBack className={"mr-2 cursor-pointer"} onClick={back}/>
-            <p>{name} - {currentDate}</p>
+            <p>{days[(new Date(currentDate)).getDay()]} - {currentDate}</p>
             <IoIosArrowForward className={"ml-2 cursor-pointer"} onClick={forward} />
         </div>
     </div>)
