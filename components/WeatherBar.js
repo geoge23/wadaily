@@ -9,6 +9,8 @@ export default function WeatherBar({icon, temp, date: currentDate, forward, back
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
     const dateString = `${months[date.getMonth()]} ${date.getDate()}`
+    const [month, day, year] = currentDate.split("-")
+    const viewingDate = new Date(year + 2000, month - 1, day)
 
     return (<div className={"flex md:flex-row flex-col my-3 mx-4 items-center justify-between"}>
         <div className={"flex"}>
@@ -17,7 +19,7 @@ export default function WeatherBar({icon, temp, date: currentDate, forward, back
         </div>
         <div className={"flex items-center"}>
             <IoIosArrowBack className={"mr-2 cursor-pointer"} onClick={back}/>
-            <p>{days[(new Date(currentDate)).getDay()]} - {currentDate}</p>
+            <p>{days[viewingDate.getDay()]} - {currentDate}</p>
             <IoIosArrowForward className={"ml-2 cursor-pointer"} onClick={forward} />
         </div>
     </div>)
