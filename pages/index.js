@@ -14,6 +14,7 @@ import Head from 'next/head';
 import getCalendarList from "../functions/calendar";
 import Cache from "node-cache";
 import { useRouter } from "next/dist/client/router";
+import NewSiteModal from "../components/NewSiteModal";
 
 const weatherCache = new Cache();
 
@@ -84,6 +85,7 @@ export default function Home(props) {
       <span id="header"></span>
       <Hero day={friendlyName} isDifferentDay={date != props.date} />
       <WeatherBar temp={props.temp} icon={props.icon} date={date} forward={goForward} back={goBack} />
+      {props.showSiteModal ? <NewSiteModal /> : null}
       {date == props.date ? null : <p className="text-center mb-4 mt-0">You are viewing info for {date} • <a className="cursor-pointer underline" onClick={() => {
         setLoading(true);
         updateUI(new Date())
@@ -113,7 +115,7 @@ export default function Home(props) {
   )
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx) {
   let weather = weatherCache.get('weather');
   if (weather == undefined) {
     let fetchedWeather = await fetch(`http://api.openweathermap.org/data/2.5/weather?zip=30337&appid=${process.env.WEATHER_KEY}&units=imperial`)
@@ -135,7 +137,8 @@ export async function getServerSideProps() {
       ...scheduleList,
       menuList,
       date,
-      calendarList
+      calendarList,
+      showSiteModal: ctx.query.movedDomains != undefined
     }
   }
 }
