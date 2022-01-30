@@ -40,20 +40,17 @@ export default function Home(props) {
   function goForward() {
     setLoading(true);
     const dateArray = date.split('-').map(e => parseInt(e));
-    const time = new Date();
-    time.setMonth(dateArray[0] - 1)
-    time.setDate(dateArray[1] + 1);
-    time.setFullYear(dateArray[2] + 2000)
+    console.log(dateArray, dateArray[0] - 1)
+    const time = new Date(dateArray[2] + 2000, dateArray[0] - 1, dateArray[1]);
+    time.setDate(time.getDate() + 1)
     updateUI(time)
   }
 
   function goBack() {
     setLoading(true);
     const dateArray = date.split('-').map(e => parseInt(e));
-    const time = new Date();
-    time.setMonth(dateArray[0] - 1)
-    time.setDate(dateArray[1] - 1);
-    time.setFullYear(dateArray[2] + 2000)
+    const time = new Date(dateArray[2] + 2000, dateArray[0] - 1, dateArray[1]);
+    time.setDate(time.getDate() - 1)
     updateUI(time)
   }
 
