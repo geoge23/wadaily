@@ -81,7 +81,7 @@ export default function Home(props) {
       <Head>
         <title>WADaily</title>
       </Head>
-      <Header />
+      <Header updateUI={updateUI} />
       <span id="header"></span>
       <Hero day={friendlyName} isDifferentDay={date != props.date} />
       <WeatherBar temp={props.temp} icon={props.icon} date={date} forward={goForward} back={goBack} />
