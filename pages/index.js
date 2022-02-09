@@ -15,6 +15,8 @@ import getCalendarList from "../functions/calendar";
 import Cache from "node-cache";
 import { useRouter } from "next/dist/client/router";
 import NewSiteModal from "../components/NewSiteModal";
+import Loader from "../components/Loader";
+import NoSchool from "../components/NoSchool";
 
 const weatherCache = new Cache();
 
@@ -37,19 +39,21 @@ export default function Home(props) {
     })
   })
 
+  function parseWaDate(dateText) {
+    const dateArray = dateText.split('-').map(e => parseInt(e));
+    return new Date(dateArray[2] + 2000, dateArray[0] - 1, dateArray[1]);
+  }
+
   function goForward() {
     setLoading(true);
-    const dateArray = date.split('-').map(e => parseInt(e));
-    console.log(dateArray, dateArray[0] - 1)
-    const time = new Date(dateArray[2] + 2000, dateArray[0] - 1, dateArray[1]);
+    const time = parseWaDate(date)
     time.setDate(time.getDate() + 1)
     updateUI(time)
   }
 
   function goBack() {
     setLoading(true);
-    const dateArray = date.split('-').map(e => parseInt(e));
-    const time = new Date(dateArray[2] + 2000, dateArray[0] - 1, dateArray[1]);
+    const time = parseWaDate(date)
     time.setDate(time.getDate() - 1)
     updateUI(time)
   }
@@ -71,22 +75,24 @@ export default function Home(props) {
 
   return (
     <>
-      {loading ? <div className="fixed z-50 top-0 left-0 h-screen w-screen flex justify-center items-center bg-gray-500 bg-opacity-40">
-          <div style={{borderTopColor: "transparent"}}
-              className="w-16 h-16 border-4 border-blue-400 border-solid rounded-full animate-spin"></div>
-      </div> : null}
+      {loading && <Loader />}
       <Head>
         <title>WADaily</title>
       </Head>
+
       <Header updateUI={updateUI} />
       <span id="header"></span>
+
       <Hero day={friendlyName} isDifferentDay={date != props.date} />
       <WeatherBar temp={props.temp} icon={props.icon} date={date} forward={goForward} back={goBack} />
-      {props.showSiteModal ? <NewSiteModal /> : null}
+
+      {props.showSiteModal && <NewSiteModal />}
+
       {date == props.date ? null : <p className="text-center mb-4 mt-0">You are viewing info for {date} • <a className="cursor-pointer underline" onClick={() => {
         setLoading(true);
         updateUI(new Date())
       }}>See Today</a></p>}
+
       {friendlyName != "No School Day" ?
       <>
         <div className={"grid box-border px-8 md:grid-cols-2 grid-cols-1"}>
@@ -99,14 +105,8 @@ export default function Home(props) {
           <span id="schedule"></span>
           <List title="Scheduled for Today" content={calendarList}/>
         </div>
-    </> :
-    <div className="w-full flex flex-col items-center">
-      <img src="./booked.svg" alt="No school today" className="h-40" />
-      <p className="text-3xl mt-2 font-semibold">No school today!</p>
-      <p>Enjoy your break or use the arrows to navigate to the next day</p>
-      <p>If you think this is a mistake, click <a className="underline cursor-pointer" href="https://forms.gle/Cu7EjdmzA8BeM4yb8">here</a> to report</p>
-      <br></br>
-    </div>}
+      </> : <NoSchool />}
+
       <Footer />
     </>
   )

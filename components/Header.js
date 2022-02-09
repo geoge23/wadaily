@@ -3,7 +3,7 @@ function Link({func = () => {}, text}) {
     return (<a className={"self-center ml-3 text-lg font-normal cursor-pointer"} onClick={func}>{text}</a>)
 }
 
-export default function Header() {
+export default function Header({updateUI}) {
     return (
         <header className={"my-5 flex justify-between"}>
             <img src={"logo.png"} alt="Logo" className={"h-16"} />
