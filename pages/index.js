@@ -9,7 +9,7 @@ import WeatherBar from "../components/WeatherBar";
 import getScheduleDay from "../functions/day";
 import getScheduleList from "../functions/schedule";
 import getMenuList from "../functions/menuList";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import Head from 'next/head';
 import getCalendarList from "../functions/calendar";
 import Cache from "node-cache";
@@ -19,6 +19,8 @@ import Loader from "../components/Loader";
 import NoSchool from "../components/NoSchool";
 
 const weatherCache = new Cache();
+const UserContext = createContext()
+export {UserContext};
 
 export default function Home(props) {
   const [schedule, setSchedule] = useState(props.schedule);
@@ -74,7 +76,11 @@ export default function Home(props) {
   }
 
   return (
-    <>
+    <UserContext.Provider value={{
+      loggedIn: false,
+      email: '',
+      meta: {}
+    }}>
       {loading && <Loader />}
       <Head>
         <title>WADaily</title>
@@ -108,7 +114,7 @@ export default function Home(props) {
       </> : <NoSchool />}
 
       <Footer />
-    </>
+    </UserContext.Provider>
   )
 }
 
