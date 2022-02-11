@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../pages";
+import AccountModal from "./AccountModal";
 import LoginModal from "./LoginModal";
 
 /* eslint-disable @next/next/no-img-element */
@@ -18,29 +19,28 @@ function formatName(n) {
     }
 }
 
-export default function Header({updateUI}) {
+export default function Header() {
     const [viewLoginModal, setViewLoginModal] = useState(false)
+    const [viewAccountModal, setViewAccountModal] = useState(false)
     const ctx = useContext(UserContext)
 
     return (
         <header className={"my-5 flex justify-between"}>
             <img src={"logo.png"} alt="Logo" className={"h-16"} />
             <div className={"flex"}>
-                <Link func={() => {
-                    document.getElementById('header').scrollIntoView()
-                    updateUI(new Date());
-                }} text={"Today"}></Link>
+                <Link func={() => {document.getElementById('header').scrollIntoView()}} text={"Today"}></Link>
                 <Link func={() => {document.getElementById('lunch').scrollIntoView()}} text={"Food"}></Link>
                 <Link func={() => {document.getElementById('schedule').scrollIntoView()}} text={"Events"}></Link>
                 
-                <div className={`rounded-full bg-gray-500 h-10 self-center ml-4 ${ctx.loggedIn && "overflow-hidden w-10"} flex justify-center items-center`}>
+                <div onClick={() => ctx.loggedIn ? setViewAccountModal(true) : setViewLoginModal(true)} className={`cursor-pointer rounded-full bg-gray-500 h-10 self-center ml-4 ${ctx.loggedIn && "overflow-hidden w-10"} flex justify-center items-center`}>
                     {ctx.loggedIn ? 
                         <p>{formatName(ctx.user.email)}</p> :
-                        <a className="cursor-pointer mx-3" onClick={() => setViewLoginModal(true)}>🔑 Login</a>
+                        <a className="cursor-pointer mx-3" >🔑 Login</a>
                     }
                 </div>
             </div>
             {viewLoginModal && <LoginModal close={() => setViewLoginModal(false)} />}
+            {viewAccountModal && <AccountModal close={() => setViewAccountModal(false)} />}
         </header>
     )
 }

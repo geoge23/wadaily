@@ -79,8 +79,8 @@ export default async function handler(req,res) {
             res.end()
         }
     }, 1000)
-    req.client.on('close', () => {
+    req.client.on('close', async () => {
         clearInterval(querier)
-        LoginEvent.deleteOne({email})
+        await LoginEvent.deleteOne({email})
     })
 }

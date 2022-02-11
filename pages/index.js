@@ -28,7 +28,7 @@ export default function Home(props) {
   const [schedule, setSchedule] = useState(props.schedule);
   const [friendlyName, setFriendlyName] = useState(props.friendlyName);
   const [calendarList, setCalendarList] = useState(props.calendarList);
-  const [loggedIn, setLoggedIn] = useState(Object.keys(props.user).length !== 0 ? true : false);
+  const [loggedIn, setLoggedIn] = useState(Object.keys(props.user).length !== 0);
   const [user, setUser] = useState(props.user);
   const [menuList, setMenuList] = useState(props.menuList);
   const [loading, setLoading] = useState(false);
@@ -91,7 +91,7 @@ export default function Home(props) {
         <title>WADaily</title>
       </Head>
 
-      <Header updateUI={updateUI} />
+      <Header />
       <span id="header"></span>
 
       <Hero day={friendlyName} isDifferentDay={date != props.date} />
