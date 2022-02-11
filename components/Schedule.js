@@ -1,6 +1,4 @@
 export default function Schedule({items: scheduleItems}) {
-    
-
     return (<div>
         {scheduleItems.length != 0 ? scheduleItems.map((e, i) => <ScheduleItem key={i} {...e} number={i} length={scheduleItems.length - 1} />) : <div>
             <p className={"text-center text-lg"}>No Schedule Data for this day</p>

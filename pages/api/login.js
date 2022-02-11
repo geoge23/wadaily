@@ -5,7 +5,7 @@ import conn, { LoginEvent, User } from "../../functions/mongo";
 
 export default async function handler(req,res) {
     const {email} = req.query
-    if (email == undefined || !/^.+@.+\.edu$/.test(email)) {
+    if (email == undefined || !/^.+@woodward\.edu$/.test(email)) {
         return res.status(400).send()
     }
     

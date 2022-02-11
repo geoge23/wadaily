@@ -12,18 +12,14 @@ export default function LoginModal({close}) {
     const [currentEmail, setCurrentEmail] = useState("")
 
     function handleLogin() {
-        console.log('running')
         setError('')
         if (currentEmail && /^.+@.+\.edu$/.test(currentEmail)) {
             setLoading(true)
-            let login;
-            try {
-                login = new EventSource(`/api/login?email=${currentEmail}`)
-            } catch (e) {
-                setError(e.toString())
+            const login = new EventSource(`/api/login?email=${currentEmail}`);
+            login.addEventListener('error', (e) => {
+                setError('Server rejected your info. Is your email an @woodward.edu?')
                 setLoading(false)
-                return;
-            }
+            })
             login.addEventListener('message', (e) => {
                 const obj = JSON.parse(e.data)
                 switch (obj.status) {
