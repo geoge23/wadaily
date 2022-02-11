@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
-import Header from "../components/Header";
+import Header, { Link } from "../components/Header";
 import Hero from "../components/Hero";
 import List from "../components/List";
 import Footer from '../components/Footer'
@@ -91,7 +91,11 @@ export default function Home(props) {
         <title>WADaily</title>
       </Head>
 
-      <Header />
+      <Header>
+        <Link func={() => {document.getElementById('header').scrollIntoView()}} text={"Today"}></Link>
+        <Link func={() => {document.getElementById('lunch').scrollIntoView()}} text={"Food"}></Link>
+        <Link func={() => {document.getElementById('schedule').scrollIntoView()}} text={"Events"}></Link>
+      </Header>
       <span id="header"></span>
 
       <Hero day={friendlyName} isDifferentDay={date != props.date} />
@@ -109,7 +113,9 @@ export default function Home(props) {
         <div className={"grid box-border px-8 md:grid-cols-2 grid-cols-1"}>
           <Schedule items={schedule} />
           <div className={"md:mt-0 mt-4"}><span id="lunch"></span>
-            <List content={menuList} title="Lunch" />
+            <List content={menuList} title="Lunch">
+              <a className="underline cursor-pointer" onClick={() => router.push('/lunch')}>Vote for today</a>
+            </List>
           </div>
         </div>
         <div className={"my-4 mb-8 box-border px-8"}>

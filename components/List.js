@@ -1,6 +1,9 @@
-export default function List({content = [{type: 'title', text: 'No data available'}], title}) {
+export default function List({content = [{type: 'title', text: 'No data available'}], title, children}) {
     return <div className={""}>
-        {title ? <p className={"text-3xl font-bold mb-3"}>{title}</p> : null}
+        <div className="flex mb-3 items-center justify-between">
+            <p className={"text-3xl font-bold mr-4"}>{title}</p>
+            {children}
+        </div>
         {content.map((e, i) => {
         switch (e.type) {
             case 'title':

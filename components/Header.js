@@ -4,9 +4,6 @@ import AccountModal from "./AccountModal";
 import LoginModal from "./LoginModal";
 
 /* eslint-disable @next/next/no-img-element */
-function Link({func = () => {}, text, className}) {
-    return (<a className={`self-center ml-3 text-lg font-normal cursor-pointer ${className}`} onClick={func}>{text}</a>)
-}
 
 function formatName(n) {
     //regex matches the .lastname@ of fn.ln@woodward.edu
@@ -19,7 +16,11 @@ function formatName(n) {
     }
 }
 
-export default function Header() {
+export function Link({func = () => {}, text, className}) {
+    return (<a className={`self-center ml-3 text-lg font-normal cursor-pointer ${className}`} onClick={func}>{text}</a>)
+  }
+
+export default function Header({children}) {
     const [viewLoginModal, setViewLoginModal] = useState(false)
     const [viewAccountModal, setViewAccountModal] = useState(false)
     const ctx = useContext(UserContext)
@@ -28,11 +29,9 @@ export default function Header() {
         <header className={"my-5 flex justify-between"}>
             <img src={"logo.png"} alt="Logo" className={"h-16"} />
             <div className={"flex"}>
-                <Link func={() => {document.getElementById('header').scrollIntoView()}} text={"Today"}></Link>
-                <Link func={() => {document.getElementById('lunch').scrollIntoView()}} text={"Food"}></Link>
-                <Link func={() => {document.getElementById('schedule').scrollIntoView()}} text={"Events"}></Link>
+                {children}
                 
-                <div onClick={() => ctx.loggedIn ? setViewAccountModal(true) : setViewLoginModal(true)} className={`cursor-pointer rounded-full bg-gray-500 h-10 self-center ml-4 ${ctx.loggedIn && "overflow-hidden w-10"} flex justify-center items-center`}>
+                <div onClick={() => ctx.loggedIn ? setViewAccountModal(true) : setViewLoginModal(true)} className={`cursor-pointer text-white rounded-full bg-gray-500 h-10 self-center ml-4 ${ctx.loggedIn && "overflow-hidden w-10"} flex justify-center items-center`}>
                     {ctx.loggedIn ? 
                         <p>{formatName(ctx.user.email)}</p> :
                         <a className="cursor-pointer mx-3" >🔑 Login</a>

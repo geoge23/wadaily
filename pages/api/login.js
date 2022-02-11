@@ -46,7 +46,7 @@ export default async function handler(req,res) {
         to: email,
         subject: 'Your sign-in link',
         html: `
-        <img src="http://cdn.mcauto-images-production.sendgrid.net/03047e060571c740/72afa473-9d59-4013-986f-8a01f0d3b585/536x564.png" height="100" />
+        <img src="http://cdn.mcauto-images-production.sendgrid.net/03047e060571c740/72afa473-9d59-4013-986f-8a01f0d3b585/536x564.png" height="100" width="100" />
         <h2>Here's your sign-in link</h2>
         <a href=${link}>Click here</a> to sign in<br>or copy-paste ${link} into your browser
         <p>Heads up! This link only lasts for 10 minutes</p>
@@ -58,7 +58,7 @@ export default async function handler(req,res) {
     const querier = setInterval(() => {
         try {
             LoginEvent.findOne({email}).then(async (e) => {
-                if ((new Date()) - e.date < (10 * 60 * 1000 /*10 min in ms*/)) {
+                if ((new Date()) - e.date > (10 * 60 * 1000 /*10 min in ms*/)) {
                     clearInterval(querier)
 
                     res.write(`data: {"status": "error", "error": "Server timed out... Did you wait longer than 10 mins?"}\n\n`)
