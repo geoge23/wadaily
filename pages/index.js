@@ -17,6 +17,8 @@ import { useRouter } from "next/dist/client/router";
 import NewSiteModal from "../components/NewSiteModal";
 import Loader from "../components/Loader";
 import NoSchool from "../components/NoSchool";
+import { validateAndDecodeJwt } from "../functions/jwt";
+import { User } from "../functions/mongo";
 
 const weatherCache = new Cache();
 const UserContext = createContext()
@@ -26,6 +28,8 @@ export default function Home(props) {
   const [schedule, setSchedule] = useState(props.schedule);
   const [friendlyName, setFriendlyName] = useState(props.friendlyName);
   const [calendarList, setCalendarList] = useState(props.calendarList);
+  const [loggedIn, setLoggedIn] = useState(Object.keys(props.user).length !== 0 ? true : false);
+  const [user, setUser] = useState(props.user);
   const [menuList, setMenuList] = useState(props.menuList);
   const [loading, setLoading] = useState(false);
   const [date, setDate] = useState(props.date);
@@ -77,9 +81,10 @@ export default function Home(props) {
 
   return (
     <UserContext.Provider value={{
-      loggedIn: false,
-      email: '',
-      meta: {}
+      loggedIn,
+      setLoggedIn,
+      user,
+      setUser
     }}>
       {loading && <Loader />}
       <Head>
@@ -132,6 +137,18 @@ export async function getServerSideProps(ctx) {
   const scheduleList = await getScheduleList(day);
   const menuList = await getMenuList();
   const calendarList = await getCalendarList();
+
+  let user = {}
+  if (ctx.req.cookies.jwt) {
+    try {
+      const { id } = await validateAndDecodeJwt(ctx.req.cookies.jwt)
+      const currentUser = (await User.findById(id))
+      user = {
+        email: currentUser.email,
+        meta: currentUser.meta
+      }
+    } catch (e) {}
+  }
   
   return {
     props: {
@@ -141,6 +158,7 @@ export async function getServerSideProps(ctx) {
       menuList,
       date,
       calendarList,
+      user,
       showSiteModal: ctx.query.movedDomains != undefined
     }
   }
