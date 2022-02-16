@@ -1,5 +1,3 @@
-import HeadsUp from "./HeadsUp";
-
 export default function Hero({day, isDifferentDay = false}) {
     return (<div name="home" className={`
         md:justify-between justify-end box-border px-6 py-5 
@@ -15,9 +13,6 @@ export default function Hero({day, isDifferentDay = false}) {
         </div>
         <div className={"md:mt-0 mt-2"}>
             <p className={"text-white"}>Open βeta • <a className="underline" href="https://forms.gle/pWSrxjLcbAtqtoax7">Report an Issue »</a></p>
-        </div>
-        <div className="absolute top-0 w-full left-0">
-            <HeadsUp />
         </div>
     </div>)
 }

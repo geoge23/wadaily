@@ -61,7 +61,17 @@ const SchedulesSchema = new mongoose.Schema({
 
 const Schedules = mongoose.models.schedules || mongoose.model('schedules', SchedulesSchema)
 
+const NotificationSchema = new mongoose.Schema({
+    "title": String,
+    "text": String,
+    "goodUntil": Date,
+    "link": String
+})
+
+const Notifications = mongoose.models.notifications || mongoose.model('notifications', NotificationSchema)
+
 export {
     Days,
-    Schedules
+    Schedules,
+    Notifications
 }

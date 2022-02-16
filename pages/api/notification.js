@@ -1,19 +1,13 @@
 import Cache from 'node-cache'
+import dbConnect, { Notifications } from '../../functions/mongo';
 const notificationCache = new Cache();
 
 export default async function handler(req, res) {
-    let ex = notificationCache.get('notification')
-    let code = notificationCache.get('code')
-    if (ex == undefined || code == undefined) {
-        const data = await fetch('https://nodered.geoge.co/wadaily/notification')
-        code = data.status;
-        notificationCache.set('code', code, 200)
-        ex = await data.json()
-        notificationCache.set('notification', ex, 200)
+    let notifications = notificationCache.get('notification')
+    if (notifications == undefined) {
+        await dbConnect()
+        notifications = await Notifications.find({"goodUntil": {$gte: new Date()}}).sort({goodUntil: 1});
+        notificationCache.set('notification', notifications, 120)
     }
-    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate')
-    res.setHeader('Pragma', 'no-cache')
-    res.setHeader('Expires', '0')
-
-    res.status(code).send(ex)
+    res.status(200).send(notifications)
 }
