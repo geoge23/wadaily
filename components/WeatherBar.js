@@ -2,14 +2,14 @@ import { IconContext } from "react-icons";
 import { BsCircleFill, BsQuestion, BsCloudRainFill, BsCloudFill, BsCloudSnowFill, BsLightningFill, BsCloudSleetFill } from 'react-icons/bs';
 import { RiMistFill, RiTornadoFill } from 'react-icons/ri'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
+const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 export default function WeatherBar({icon, temp, date: currentDate, forward, back}) {
     const date = new Date();
-    const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
     const dateString = `${months[date.getMonth()]} ${date.getDate()}`
-    const [month, day, year] = currentDate.split("-")
+    const [month, day, year] = currentDate.split("-").map(e => parseInt(e))
     const viewingDate = new Date(year + 2000, month - 1, day)
 
     return (<div className={"flex md:flex-row flex-col my-3 mx-4 items-center justify-between"}>
