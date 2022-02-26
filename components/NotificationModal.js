@@ -32,12 +32,13 @@ export default function NotificationModal() {
     })
 
     const navigate = (n) => () => {
-        if (viewing + n >= 0 && viewing + n <= notifications.length) setViewing(viewing + n);
+        console.log(viewing, n)
+        if (viewing + n >= 0 && viewing + n <= notifications.length - 1) setViewing(viewing + n);
     }
 
     return (visible && <Modal style={{minWidth: '30%'}}>
             <p className="absolute top-3 right-4 cursor-pointer" onClick={() => setVisible(false)}>x</p>
-            <p className="text-xl">{notifications[viewing].title}</p>
+            <p className="text-xl mr-5">{notifications[viewing].title}</p>
             <p dangerouslySetInnerHTML={{__html: notifications[viewing].text}}></p>
             {notifications[viewing].link && <a href={notifications[viewing].link} className="underline mt-2">Click here</a>}
             <div className={"flex items-center self-center mt-2"}>
