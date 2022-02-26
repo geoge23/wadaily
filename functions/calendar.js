@@ -1,5 +1,6 @@
 import ical from 'node-ical'
 import Cache from 'node-cache'
+import { Announcements } from './mongo'
 const calCache = new Cache()
 
 export default async function getCalendarList(date) {
@@ -16,6 +17,8 @@ export default async function getCalendarList(date) {
         }
         const icl = await ical.async.parseICS(a);
         items = [];
+
+        //get items from calendar
         for (let e in icl) {
             const startDate = icl[e].start;
             const startDateString = `${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate().toString().padStart(2, "0")}`
@@ -26,11 +29,66 @@ export default async function getCalendarList(date) {
                 })
             }
         }
+        if (items.length > 0) {
+            items.unshift({
+                type: 'title',
+                text: 'Calendar Events'
+            })
+        }
+
+        //query for announcements
+        const waDate = `${Now.getMonth() + 1}-${Now.getDate()}-${Now.getFullYear() % 100}`
+        const dayAnnouncement = await Announcements.findOne({
+            type: 'day',
+            date: waDate
+        })
+        if (dayAnnouncement != undefined && dayAnnouncement.list.length > 0) {
+            items.push({
+                type: 'title',
+                text: 'Daily Announcements'
+            })
+            dayAnnouncement.list.forEach(e => {
+                items.push({
+                    type: 'entry',
+                    text: e
+                })
+            })
+        }
+
+        const weekAnnouncement = await Announcements.findOne({
+            type: 'week',
+            week: getWeek(Now) * Now.getFullYear()
+        })
+        if (weekAnnouncement != undefined && weekAnnouncement.list.length > 0) {
+            items.push({
+                type: 'title',
+                text: 'Weekly Announcements'
+            })
+            weekAnnouncement.list.forEach(e => {
+                items.push({
+                    type: 'entry',
+                    text: e
+                })
+            })
+        }
+        
         calCache.set(formattedDate, items, 6000);
     }
 
     return items.length == 0 ? [{
         type: 'title',
-        text: 'No Events Scheduled'
+        text: 'No Announcements Today'
     }] : items;
+}
+
+function getWeek(d) {
+    var date = new Date(d.getTime());
+    date.setHours(0, 0, 0, 0);
+    // Thursday in current week decides the year.
+    date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
+    // January 4 is always in week 1.
+    var week1 = new Date(date.getFullYear(), 0, 4);
+    // Adjust to Thursday in week 1 and count number of weeks from date to week1.
+    return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000
+                            - 3 + (week1.getDay() + 6) % 7) / 7);
 }

@@ -70,8 +70,25 @@ const NotificationSchema = new mongoose.Schema({
 
 const Notifications = mongoose.models.notifications || mongoose.model('notifications', NotificationSchema)
 
+const AnnouncementSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        enum: ['day', 'week']
+    },
+    date: {
+        type: String
+    },
+    week: {
+        type: Number
+    },
+    list: [String]
+})
+
+const Announcements = mongoose.models.announcements || mongoose.model('announcements', AnnouncementSchema)
+
 export {
     Days,
     Schedules,
-    Notifications
+    Notifications,
+    Announcements
 }
