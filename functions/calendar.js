@@ -45,7 +45,7 @@ export default async function getCalendarList(date) {
         if (dayAnnouncement != undefined && dayAnnouncement.list.length > 0) {
             items.push({
                 type: 'title',
-                text: 'Daily Announcements'
+                text: 'Today'
             })
             dayAnnouncement.list.forEach(e => {
                 items.push({
@@ -62,7 +62,7 @@ export default async function getCalendarList(date) {
         if (weekAnnouncement != undefined && weekAnnouncement.list.length > 0) {
             items.push({
                 type: 'title',
-                text: 'Weekly Announcements'
+                text: 'This Week'
             })
             weekAnnouncement.list.forEach(e => {
                 items.push({
