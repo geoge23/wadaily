@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function List({content = [{type: 'title', text: 'No data available'}], title, itemsCollapsible}) {
     return <div className={""}>
@@ -20,12 +20,20 @@ function TextItem({i, element: e, itemsCollapsible}) {
     const [visible, setVisible] = useState(!itemsCollapsible)
     const [isOverflowing, setIsOverflowing] = useState(false)
     const ref = useRef(null)
-    useLayoutEffect(() => {
+    useEffect(() => {
         setIsOverflowing((ref.current.offsetWidth < ref.current.scrollWidth))
-    }, [e])
+    }, [])
 
     return <span key={i} className={`flex w-full relative`} onClick={() => setVisible(!visible)}>
-        <p ref={ref} className={`text-2xl mb-4 ${itemsCollapsible ? 'cursor-pointer mr-4' : ''} ${itemsCollapsible && !visible ? "overflow-hidden whitespace-nowrap block" : "flex"}`} style={{textOverflow: itemsCollapsible ? 'ellipsis' : 'initial'}}>{e.text}</p>
+
+        <p ref={ref} className={`
+            text-2xl mb-4 
+            ${itemsCollapsible && isOverflowing ? 'cursor-pointer mr-4' : ''} 
+            ${itemsCollapsible && !visible ? "overflow-hidden whitespace-nowrap block" : "flex"}
+        `} style={{textOverflow: itemsCollapsible ? 'ellipsis' : 'initial'}}>
+            {e.text}
+        </p>
+
         {e.sideText ? <p className={"text-2xl ml-auto"}>{e.sideText}</p> : null}
         {itemsCollapsible && isOverflowing ? <p className={`absolute right-0 top-1 cursor-pointer ${visible ? "transform rotate-180" : ""}`}>↓</p> : null}
     </span>;
