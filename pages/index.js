@@ -105,7 +105,7 @@ export default function Home(props) {
         </div>
         <div className={"my-4 mb-8 box-border px-8"}>
           <span id="schedule"></span>
-          <List title="Scheduled for Today" content={calendarList}/>
+          <List title="Scheduled for Today" itemsCollapsible={true} content={calendarList}/>
         </div>
       </> : <NoSchool />}
 
