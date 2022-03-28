@@ -9,5 +9,6 @@ export default async function handler(req, res) {
         notifications = await Notifications.find({"goodUntil": {$gte: new Date()}}).sort({goodUntil: 1});
         notificationCache.set('notification', notifications, 120)
     }
+    res.setHeader("Cache-Control", "no-store")
     res.status(200).send(notifications)
 }
