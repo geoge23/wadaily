@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function List({content = [{type: 'title', text: 'No data available'}], title, itemsCollapsible}) {
+export default function List({content = [{type: 'title', text: 'No data available'}], title, itemsCollapsible, children}) {
     return <div className={""}>
         {title ? <p className={"text-3xl font-bold mb-3"}>{title}</p> : null}
+        {children}
         {content.map((e, i) => {
         switch (e.type) {
             case 'title':

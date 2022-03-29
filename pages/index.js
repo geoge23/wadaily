@@ -18,6 +18,7 @@ import NewSiteModal from "../components/NewSiteModal";
 import Loader from "../components/Loader";
 import NoSchool from "../components/NoSchool";
 import NotificationModal from "../components/NotificationModal";
+import RadioSelector from "../components/RadioSelector";
 
 const weatherCache = new Cache();
 
@@ -28,6 +29,7 @@ export default function Home(props) {
   const [menuList, setMenuList] = useState(props.menuList);
   const [loading, setLoading] = useState(false);
   const [date, setDate] = useState(props.date);
+  const [selectedCafeteria, setSelectedCafeteria] = useState("Cafeteria");
   const router = useRouter()
 
   useEffect(() => {
@@ -39,6 +41,27 @@ export default function Home(props) {
       }
     })
   })
+
+  useEffect(() => {
+    const time = parseWaDate(date)
+    const now = `${time.getMonth() + 1}-${time.getDate()}-${time.getFullYear() % 100}`
+    switch (selectedCafeteria) {
+      case "Cafeteria":
+        setLoading(true)
+        fetch(`/api/lunchList?date=${now}`)
+          .then(e => e.json())
+          .then(e => setMenuList(e))
+          .then(() => setLoading(false))
+        break;
+      case "West Commons":
+        setLoading(true)
+        fetch(`/api/westCommonsList?date=${now}`)
+          .then(e => e.json())
+          .then(e => setMenuList(e))
+          .then(() => setLoading(false))
+        break;
+    }
+  }, [selectedCafeteria])
 
   function parseWaDate(dateText) {
     const dateArray = dateText.split('-').map(e => parseInt(e));
@@ -68,6 +91,7 @@ export default function Home(props) {
       setMenuList(lunchList);
       setCalendarList(calendar);
     }
+    setSelectedCafeteria("Cafeteria")
     setSchedule(newSchedule);
     setFriendlyName(newFriendlyName);
     setDate(now);
@@ -79,6 +103,7 @@ export default function Home(props) {
       {loading && <Loader />}
       <Head>
         <title>WADaily</title>
+        <meta name="description" content="View your schedule, menu, and announcements for Woodward Academy quicky and efficiently!"></meta>
       </Head>
 
       <Header />
@@ -100,7 +125,9 @@ export default function Home(props) {
         <div className={"grid box-border px-8 md:grid-cols-2 grid-cols-1"}>
           <Schedule items={schedule} />
           <div className={"md:mt-0 mt-4"}><span id="lunch"></span>
-            <List content={menuList} title="Lunch" />
+            <List content={menuList} title="Lunch">
+              <RadioSelector options={["Cafeteria", "West Commons"]} state={selectedCafeteria} setState={setSelectedCafeteria} />
+            </List>
           </div>
         </div>
         <div className={"my-4 mb-8 box-border px-8"}>
