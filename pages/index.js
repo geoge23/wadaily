@@ -42,27 +42,6 @@ export default function Home(props) {
     })
   })
 
-  useEffect(() => {
-    const time = parseWaDate(date)
-    const now = `${time.getMonth() + 1}-${time.getDate()}-${time.getFullYear() % 100}`
-    switch (selectedCafeteria) {
-      case "Cafeteria":
-        setLoading(true)
-        fetch(`/api/lunchList?date=${now}`)
-          .then(e => e.json())
-          .then(e => setMenuList(e))
-          .then(() => setLoading(false))
-        break;
-      case "West Commons":
-        setLoading(true)
-        fetch(`/api/westCommonsList?date=${now}`)
-          .then(e => e.json())
-          .then(e => setMenuList(e))
-          .then(() => setLoading(false))
-        break;
-    }
-  }, [selectedCafeteria])
-
   function parseWaDate(dateText) {
     const dateArray = dateText.split('-').map(e => parseInt(e));
     return new Date(dateArray[2] + 2000, dateArray[0] - 1, dateArray[1]);
@@ -80,6 +59,28 @@ export default function Home(props) {
     const time = parseWaDate(date)
     time.setDate(time.getDate() - 1)
     updateUI(time)
+  }
+
+  function handleChangeCafeteria(e) {
+    setSelectedCafeteria(e)
+    const time = parseWaDate(date)
+    const now = `${time.getMonth() + 1}-${time.getDate()}-${time.getFullYear() % 100}`
+    switch (e) {
+      case "Cafeteria":
+        setLoading(true)
+        fetch(`/api/lunchList?date=${now}`)
+          .then(e => e.json())
+          .then(e => setMenuList(e))
+          .then(() => setLoading(false))
+        break;
+      case "West Commons":
+        setLoading(true)
+        fetch(`/api/westCommonsList?date=${now}`)
+          .then(e => e.json())
+          .then(e => setMenuList(e))
+          .then(() => setLoading(false))
+        break;
+    }
   }
 
   async function updateUI(time) {
@@ -126,7 +127,11 @@ export default function Home(props) {
           <Schedule items={schedule} />
           <div className={"md:mt-0 mt-4"}><span id="lunch"></span>
             <List content={menuList} title="Lunch">
-              <RadioSelector options={["Cafeteria", "West Commons"]} state={selectedCafeteria} setState={setSelectedCafeteria} />
+              <RadioSelector options={["Cafeteria", "West Commons"]} 
+                className="mt-1"
+                state={selectedCafeteria} 
+                setState={handleChangeCafeteria} 
+              />
             </List>
           </div>
         </div>
