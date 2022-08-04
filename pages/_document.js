@@ -18,6 +18,7 @@ class MyDocument extends Document {
             gtag('js', new Date());
 
             gtag('config', 'G-18065K9X6D');`}}></script>
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2449248336438334" crossOrigin="anonymous"></script>
         </Head>
         <body className="bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200">
           <Main />
