@@ -6,7 +6,7 @@ WADaily is a student-led schedule viewing website created in 2021 by George Park
 ![Screenshot](https://i.ibb.co/Hdr30z9/wadaily-co.png)
 
 ### WADaily API
-Please be kind to the server bandwidth and abide by cache headers! A rate limit is implemented for requests over a reasonable amount, and you will recieve a HTTP code 429 if you hit endpoints repeatedly
+Please be kind to the server bandwidth and abide by cache headers! A rate limit is implemented for requests over a reasonable amount, and you will receive a HTTP code 429 if you hit endpoints repeatedly
 - https://wadaily.co/api/schedule
   - Returns JSON object holding the schedule day 
 ```json
