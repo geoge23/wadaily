@@ -14,7 +14,6 @@ import Head from 'next/head';
 import getCalendarList from "../functions/calendar";
 import Cache from "node-cache";
 import { useRouter } from "next/dist/client/router";
-import NewSiteModal from "../components/NewSiteModal";
 import Loader from "../components/Loader";
 import NoSchool from "../components/NoSchool";
 import NotificationModal from "../components/NotificationModal";
@@ -40,7 +39,7 @@ export default function Home(props) {
         router.reload()
       }
     })
-  })
+  }, [props.date, router])
 
   function parseWaDate(dateText) {
     const dateArray = dateText.split('-').map(e => parseInt(e));
@@ -113,7 +112,6 @@ export default function Home(props) {
       <Hero day={friendlyName} isDifferentDay={date != props.date} />
       <WeatherBar temp={props.temp} icon={props.icon} date={date} forward={goForward} back={goBack} />
 
-      {props.showSiteModal && <NewSiteModal />}
       <NotificationModal />
 
       {date == props.date ? null : <p className="text-center mb-4 mt-0">You are viewing info for {date} • <a className="cursor-pointer underline" onClick={() => {
@@ -168,8 +166,7 @@ export async function getServerSideProps(ctx) {
       ...scheduleList,
       menuList,
       date,
-      calendarList,
-      showSiteModal: ctx.query.movedDomains != undefined
+      calendarList
     }
   }
 }
