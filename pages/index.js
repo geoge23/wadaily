@@ -46,17 +46,10 @@ export default function Home(props) {
     return new Date(dateArray[2] + 2000, dateArray[0] - 1, dateArray[1]);
   }
 
-  function goForward() {
+  function progressByDays(num) {
     setLoading(true);
     const time = parseWaDate(date)
-    time.setDate(time.getDate() + 1)
-    updateUI(time)
-  }
-
-  function goBack() {
-    setLoading(true);
-    const time = parseWaDate(date)
-    time.setDate(time.getDate() - 1)
+    time.setDate(time.getDate() + num)
     updateUI(time)
   }
 
@@ -110,7 +103,7 @@ export default function Home(props) {
       <span id="header"></span>
 
       <Hero day={friendlyName} isDifferentDay={date != props.date} />
-      <WeatherBar temp={props.temp} icon={props.icon} date={date} forward={goForward} back={goBack} />
+      <WeatherBar temp={props.temp} icon={props.icon} date={date} forward={() => progressByDays(1)} back={() => progressByDays(-1)} />
 
       <NotificationModal />
 
