@@ -35,11 +35,11 @@ export default function Home(props) {
     window.addEventListener('focus', () => {
       const Now = new Date();
       const currentDate = `${Now.getMonth() + 1}-${Now.getDate()}-${Now.getFullYear() % 100}`
-      if (props.date != currentDate) {
+      if (date != currentDate) {
         router.reload()
       }
     })
-  }, [props.date, router])
+  }, [date, router])
 
   function parseWaDate(dateText) {
     const dateArray = dateText.split('-').map(e => parseInt(e));
@@ -102,8 +102,18 @@ export default function Home(props) {
       <Header />
       <span id="header"></span>
 
-      <Hero day={friendlyName} isDifferentDay={date != props.date} />
-      <WeatherBar temp={props.temp} icon={props.icon} date={date} forward={() => progressByDays(1)} back={() => progressByDays(-1)} />
+      <Hero 
+        day={friendlyName} 
+        isDifferentDay={date != props.date} 
+      />
+
+      <WeatherBar 
+        temp={props.temp} 
+        icon={props.icon} 
+        date={date} 
+        forward={() => progressByDays(1)} 
+        back={() => progressByDays(-1)} 
+      />
 
       <NotificationModal />
 
@@ -115,10 +125,15 @@ export default function Home(props) {
       {friendlyName != "No School Day" ?
       <>
         <div className={"grid box-border px-8 md:grid-cols-2 grid-cols-1"}>
-          <Schedule items={schedule} />
-          <div className={"md:mt-0 mt-4"}><span id="lunch"></span>
+          <Schedule 
+            items={schedule}
+            isDifferentDay={date != props.date} 
+          />
+          <div className={"md:mt-0 mt-4"}>
+            <span id="lunch"></span>
             <List content={menuList} title="Lunch">
-              <RadioSelector options={["Cafeteria", "West Commons"]} 
+              <RadioSelector 
+                options={["Cafeteria", "West Commons"]} 
                 className="mt-1"
                 state={selectedCafeteria} 
                 setState={handleChangeCafeteria} 
@@ -128,7 +143,11 @@ export default function Home(props) {
         </div>
         <div className={"my-4 mb-8 box-border px-8"}>
           <span id="schedule"></span>
-          <List title="Scheduled for Today" itemsCollapsible={true} content={calendarList}/>
+          <List 
+            title="Scheduled for Today" 
+            itemsCollapsible={true} 
+            content={calendarList}
+          />
         </div>
       </> : <NoSchool />}
 
