@@ -1,5 +1,4 @@
-import conn from './mongo'
-import { Schedules } from './mongo';
+import conn, { Schedules } from './mongo';
 
 export default async function getScheduleList(name) {
     await conn();

@@ -1,5 +1,4 @@
-import conn from './mongo'
-import { Days } from './mongo';
+import conn, { Days } from './mongo';
 
 export default async function getScheduleDay(date) {
     if (!date) {

@@ -1,5 +1,4 @@
-import { useEffect, useState, useContext } from "react";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { useContext, useState } from "react";
 import DaysModal from "./DaysModal";
 import Modal from "./Modal";
 import { PreferencesContext } from "./PreferencesContext";
@@ -28,7 +27,7 @@ export default function SettingsModal({visible, setVisible}) {
                 <Checkbox text="West Commons" checked={ctx.preferences.westCommons} onChange={() => ctx.updatePreferences({westCommons: !ctx.preferences.westCommons})}>
                     Show West Commons over the cafeteria for lunch by default.
                 </Checkbox>
-                <Button text="Clear Announcement Cache" buttonText="Run" onChange={() => {window.localStorage.setItem('seen-announcements', "{}")}}>
+                <Button text="Clear Announcement Cache" buttonText="Run" onChange={() => {window.localStorage.setItem('seen-announcements', "[]")}}>
                     Clear cache of seen announcements if it overflows.
                 </Button>
                 <Button text="Update Class Names" onChange={() => {setDaysModalVisible(true)}}>

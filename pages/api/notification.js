@@ -1,4 +1,4 @@
-import Cache from 'node-cache'
+import Cache from 'node-cache';
 import dbConnect, { Notifications } from '../../functions/mongo';
 const notificationCache = new Cache();
 

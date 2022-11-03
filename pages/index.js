@@ -1,24 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
 
+import { useRouter } from "next/dist/client/router";
+import Head from 'next/head';
+import Cache from "node-cache";
+import { useContext, useEffect, useState } from "react";
+import Footer from '../components/Footer';
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import List from "../components/List";
-import Footer from '../components/Footer'
-import Schedule from "../components/Schedule";
-import WeatherBar from "../components/WeatherBar";
-import getScheduleDay from "../functions/day";
-import getScheduleList from "../functions/schedule";
-import getMenuList from "../functions/menuList";
-import { useContext, useEffect, useState } from "react";
-import Head from 'next/head';
-import getCalendarList from "../functions/calendar";
-import Cache from "node-cache";
-import { useRouter } from "next/dist/client/router";
 import Loader from "../components/Loader";
 import NoSchool from "../components/NoSchool";
 import NotificationModal from "../components/NotificationModal";
+import { PreferencesContext } from "../components/PreferencesContext";
 import RadioSelector from "../components/RadioSelector";
-import {PreferencesContext} from "../components/PreferencesContext";
+import Schedule from "../components/Schedule";
+import WeatherBar from "../components/WeatherBar";
+import getCalendarList from "../functions/calendar";
+import getScheduleDay from "../functions/day";
+import getMenuList from "../functions/menuList";
+import getScheduleList from "../functions/schedule";
 
 const weatherCache = new Cache();
 
