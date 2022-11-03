@@ -9,7 +9,7 @@ import WeatherBar from "../components/WeatherBar";
 import getScheduleDay from "../functions/day";
 import getScheduleList from "../functions/schedule";
 import getMenuList from "../functions/menuList";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Head from 'next/head';
 import getCalendarList from "../functions/calendar";
 import Cache from "node-cache";
@@ -18,6 +18,7 @@ import Loader from "../components/Loader";
 import NoSchool from "../components/NoSchool";
 import NotificationModal from "../components/NotificationModal";
 import RadioSelector from "../components/RadioSelector";
+import {PreferencesContextComponent} from "../components/PreferencesContext";
 
 const weatherCache = new Cache();
 
@@ -35,11 +36,11 @@ export default function Home(props) {
     window.addEventListener('focus', () => {
       const Now = new Date();
       const currentDate = `${Now.getMonth() + 1}-${Now.getDate()}-${Now.getFullYear() % 100}`
-      if (date != currentDate) {
+      if (props.date != currentDate) {
         router.reload()
       }
     })
-  }, [date, router])
+  }, [props.date, router])
 
   function parseWaDate(dateText) {
     const dateArray = dateText.split('-').map(e => parseInt(e));
@@ -92,7 +93,7 @@ export default function Home(props) {
   }
 
   return (
-    <>
+    <PreferencesContextComponent>
       {loading && <Loader />}
       <Head>
         <title>WADaily</title>
@@ -152,7 +153,7 @@ export default function Home(props) {
       </> : <NoSchool />}
 
       <Footer />
-    </>
+    </PreferencesContextComponent>
   )
 }
 

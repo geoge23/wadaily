@@ -1,4 +1,5 @@
 import { useContext, useEffect, useMemo, useState } from "react";
+import { PreferencesContext } from "./PreferencesContext";
 
 export default function Schedule({items: scheduleItems, isDifferentDay}) {
     const [time,setTime] = useState(getCurrentTime());
@@ -39,8 +40,11 @@ function getCurrentTime() {
 }
 
 function ScheduleItem(props) {
+    const ctx = useContext(PreferencesContext);
+
     const betweenTime = useMemo(() => {
-        if (props.isDifferentDay) return ["#1f2937d9", "#1f2937d9", "#1f2937d9"]; 
+        if (!ctx.preferences.showProgressAcrossDays) return ["#E22626", "#E22626", "#E22626"];
+        if (props.isDifferentDay) return ["#6b7280", "#6b7280", "#6b7280"]; 
         switch (isBetweenTime(props.time, props.startTime, props.endTime)) {
             case -1:
             default:
@@ -50,7 +54,7 @@ function ScheduleItem(props) {
             case 1:
                 return ["#E22626", "#E22626", "#E22626"];
         }
-    }, [props.time, props.startTime, props.endTime, props.isDifferentDay]);
+    }, [props.time, props.startTime, props.endTime, props.isDifferentDay, ctx.preferences.showProgressAcrossDays]);
 
     return (<div className={"flex items-center"}>
         <svg height="80" width="25" className="wadaily-line">

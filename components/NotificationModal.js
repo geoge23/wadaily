@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Modal from "./Modal";
+import { PreferencesContext } from "./PreferencesContext";
 
 export default function NotificationModal() {
     const [visible, setVisible] = useState(false)
     const [notifications, setNotifications] = useState([])
     const [viewing, setViewing] = useState(0)
+
+    const ctx = useContext(PreferencesContext);
 
     useEffect(() => {
         fetch('/api/notification')
@@ -35,6 +38,8 @@ export default function NotificationModal() {
         console.log(viewing, n)
         if (viewing + n >= 0 && viewing + n <= notifications.length - 1) setViewing(viewing + n);
     }
+
+    if (!ctx.preferences.announcements) return <></>
 
     return (visible && <Modal style={{minWidth: '30%'}}>
             <p className="absolute top-3 right-4 cursor-pointer" onClick={() => setVisible(false)}>x</p>
