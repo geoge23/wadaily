@@ -63,7 +63,7 @@ function ScheduleItem(props) {
             <circle cx="12.5" cy="40" r="6" fill={betweenTime[1]}></circle>
         </svg>
         <div>
-            <p className={"text-3xl font-medium"} suppressHydrationWarning>{ctx.preferences.classNames[props.code] || props.name}</p>
+            <p className={"text-3xl font-medium"} suppressHydrationWarning>{ctx.preferences.classNames?.[props.code] ?? props.name}</p>
             <p>{props.startTime} to {props.endTime}</p>
         </div>
     </div>);
