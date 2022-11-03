@@ -17,7 +17,7 @@ export default function Header() {
                 <Link func={() => {document.getElementById('header').scrollIntoView()}} text={"Today"}></Link>
                 <Link func={() => {document.getElementById('lunch').scrollIntoView()}} text={"Food"}></Link>
                 <Link func={() => {document.getElementById('schedule').scrollIntoView()}} text={"Events"}></Link>
-                <BsGearFill className='ml-3' onClick={() => setSettingsVisible(true)} />
+                <BsGearFill className='ml-3 cursor-pointer' onClick={() => setSettingsVisible(true)} />
             </div>
             <SettingsModal visible={settingsVisible} setVisible={setSettingsVisible} />
         </header>

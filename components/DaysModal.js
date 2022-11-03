@@ -24,7 +24,7 @@ function OptionBlock({blockCode, classNames, setClassNames}) {
     return (
         <div className="flex items-center mt-4">
             <p className="mr-2">Block {blockCode}</p>
-            <input className="border-2" type="text" value={classNames[blockCode]} onChange={(e) => setClassNames({...classNames, [blockCode]: e.target.value})} />
+            <input className="border-2 text-black" type="text" value={classNames[blockCode]} onChange={(e) => setClassNames({...classNames, [blockCode]: e.target.value})} />
         </div>
     )
 }

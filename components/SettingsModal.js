@@ -12,7 +12,7 @@ export default function SettingsModal({visible, setVisible}) {
             <DaysModal setVisible={setDaysModalVisible} visible={daysModalVisible} />
             <p className="absolute top-3 right-4 cursor-pointer" onClick={() => setVisible(false)}>x</p>
             <p className="text-2xl">Preferences</p>
-            <div style={{maxHeight: 500, overflowY: 'scroll'}}>
+            <div style={{maxHeight: 470, overflowY: 'scroll'}}>
                 <Checkbox text="Show progress across the day" checked={ctx.preferences.showProgressAcrossDays} onChange={() => ctx.updatePreferences({showProgressAcrossDays: !ctx.preferences.showProgressAcrossDays})}>
                     Shows progress along the red line next to the schedule as the day progresses
                 </Checkbox>
