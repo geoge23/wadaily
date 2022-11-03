@@ -9,7 +9,9 @@ export function PreferencesContextComponent({children}) {
     {
         showProgressAcrossDays: true,
         theming: true,
-        announcements: true
+        announcements: true,
+        westCommons: false,
+        classNames: {}
     })
 
     function updatePreferences(newPreferences) {

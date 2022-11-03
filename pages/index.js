@@ -18,7 +18,7 @@ import Loader from "../components/Loader";
 import NoSchool from "../components/NoSchool";
 import NotificationModal from "../components/NotificationModal";
 import RadioSelector from "../components/RadioSelector";
-import {PreferencesContextComponent} from "../components/PreferencesContext";
+import {PreferencesContext} from "../components/PreferencesContext";
 
 const weatherCache = new Cache();
 
@@ -32,6 +32,8 @@ export default function Home(props) {
   const [selectedCafeteria, setSelectedCafeteria] = useState("Cafeteria");
   const router = useRouter()
 
+  const ctx = useContext(PreferencesContext);
+
   useEffect(() => {
     window.addEventListener('focus', () => {
       const Now = new Date();
@@ -41,6 +43,12 @@ export default function Home(props) {
       }
     })
   }, [props.date, router])
+
+  useEffect(() => {
+    if (ctx.preferences.westCommons) {
+      setSelectedCafeteria("West Commons")
+    }
+  }, [ctx.preferences.westCommons])
 
   function parseWaDate(dateText) {
     const dateArray = dateText.split('-').map(e => parseInt(e));
@@ -93,7 +101,7 @@ export default function Home(props) {
   }
 
   return (
-    <PreferencesContextComponent>
+    <div>
       {loading && <Loader />}
       <Head>
         <title>WADaily</title>
@@ -153,7 +161,7 @@ export default function Home(props) {
       </> : <NoSchool />}
 
       <Footer />
-    </PreferencesContextComponent>
+    </div>
   )
 }
 

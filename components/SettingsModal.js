@@ -1,32 +1,43 @@
 import { useEffect, useState, useContext } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import DaysModal from "./DaysModal";
 import Modal from "./Modal";
 import { PreferencesContext } from "./PreferencesContext";
 
 export default function SettingsModal({visible, setVisible}) {
     const ctx = useContext(PreferencesContext);
+    const [daysModalVisible, setDaysModalVisible] = useState(false);
 
-    return (visible && <Modal style={{minWidth: '30%'}}>
+    return (visible && <Modal style={{minWidth: '30%', overflowY: "scroll"}}>
+            <DaysModal setVisible={setDaysModalVisible} visible={daysModalVisible} />
             <p className="absolute top-3 right-4 cursor-pointer" onClick={() => setVisible(false)}>x</p>
             <p className="text-2xl">Preferences</p>
-            <Checkbox text="Show progress across the day" checked={ctx.preferences.showProgressAcrossDays} onChange={() => ctx.updatePreferences({showProgressAcrossDays: !ctx.preferences.showProgressAcrossDays})}>
-                Shows progress along the red line next to the schedule as the day progresses
-            </Checkbox>
-            <Checkbox text="Holiday Theming" checked={ctx.preferences.theming} onChange={() => ctx.updatePreferences({theming: !ctx.preferences.theming})}>
-                Ignore themes and additions for the holidays.
-            </Checkbox>
-            <Checkbox text="Upload Analytics" checked={true} onChange={() => {alert("Feature not supported!")}}>
-                Opt out of analytics for service improvement. Not recommended to change.
-            </Checkbox>
-            <Checkbox text="Show School-Wide Announcements" checked={ctx.preferences.announcements} onChange={() => ctx.updatePreferences({announcements: !ctx.preferences.announcements})}>
-                Show or hide announcements that appear as modal messages. Not recommended to change.
-            </Checkbox>
-            <Button text="Clear Announcement Cache" onChange={() => {window.localStorage.setItem('seen-announcements', "{}")}}>
-                Clear cache of seen announcements if it overflows.
-            </Button>
-            <p className="mt-4">From the WADaily Team ☕</p>
-            <p className="opacity-70">But mostly George</p>
-            <p className="opacity-70">Version {VERSION} from {LASTCOMMITDATETIME}</p>
+            <div style={{maxHeight: 500, overflowY: 'scroll'}}>
+                <Checkbox text="Show progress across the day" checked={ctx.preferences.showProgressAcrossDays} onChange={() => ctx.updatePreferences({showProgressAcrossDays: !ctx.preferences.showProgressAcrossDays})}>
+                    Shows progress along the red line next to the schedule as the day progresses
+                </Checkbox>
+                <Checkbox text="Holiday Theming" checked={ctx.preferences.theming} onChange={() => ctx.updatePreferences({theming: !ctx.preferences.theming})}>
+                    Ignore themes and additions for the holidays.
+                </Checkbox>
+                <Checkbox text="Upload Analytics" checked={true} onChange={() => {alert("Feature not supported!")}}>
+                    Opt out of analytics for service improvement. Not recommended to change.
+                </Checkbox>
+                <Checkbox text="Show School-Wide Announcements" checked={ctx.preferences.announcements} onChange={() => ctx.updatePreferences({announcements: !ctx.preferences.announcements})}>
+                    Show or hide announcements that appear as modal messages. Not recommended to change.
+                </Checkbox>
+                <Checkbox text="West Commons" checked={ctx.preferences.westCommons} onChange={() => ctx.updatePreferences({westCommons: !ctx.preferences.westCommons})}>
+                    Show West Commons over the cafeteria for lunch by default.
+                </Checkbox>
+                <Button text="Clear Announcement Cache" buttonText="Run" onChange={() => {window.localStorage.setItem('seen-announcements', "{}")}}>
+                    Clear cache of seen announcements if it overflows.
+                </Button>
+                <Button text="Update Class Names" onChange={() => {setDaysModalVisible(true)}}>
+                    Set your class names so that they display on the schedule.
+                </Button>
+                <p className="mt-4">From the WADaily Team ☕</p>
+                <p className="opacity-70">But mostly George</p>
+                <p className="opacity-70">Version {VERSION} from {LASTCOMMITDATETIME}</p>
+            </div>
         </Modal>)
 }
 
@@ -34,8 +45,8 @@ export default function SettingsModal({visible, setVisible}) {
 function Checkbox({text, children, checked, onChange}) {
     return (
         <div className="flex items-center mt-2">
-            <input type="checkbox" checked={checked} onChange={onChange} className="mr-2" />
-            <div onClick={onChange}>
+            <input type="checkbox" checked={checked} onChange={onChange} className="mr-2 w-1/12" />
+            <div onClick={onChange} className="w-11/12">
                 <p>{text}</p>
                 <p className="opacity-70 text-sm">{children}</p>
             </div>
@@ -43,10 +54,10 @@ function Checkbox({text, children, checked, onChange}) {
     )
 }
 
-function Button({text, children, onChange}) {
+function Button({text, children, onChange, buttonText = "Open"}) {
     return (
         <div className="flex items-center mt-2">
-            <button onClick={onChange} className="mr-3 border-2 text-white px-3 py-1 bg-black">Run</button>
+            <button onClick={onChange} className="mr-3 border-2 text-white px-3 py-1 bg-black">{buttonText}</button>
             <div onClick={onChange}>
                 <p>{text}</p>
                 <p className="opacity-70 text-sm">{children}</p>

@@ -9,7 +9,7 @@ export default function List({content = [{type: 'title', text: 'No data availabl
             case 'title':
                 return (<p key={i} className={"font-semibold mb-2 uppercase tracking-wider text-2xl"}>{e.text}</p>)
             case 'entry':
-                return (<TextItem i={i} element={e} itemsCollapsible={itemsCollapsible}></TextItem>)
+                return (<TextItem i={i} key={i} element={e} itemsCollapsible={itemsCollapsible}></TextItem>)
             case 'break':
             default:
                 return <br />;
