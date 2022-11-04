@@ -17,6 +17,10 @@ export function PreferencesContextComponent({children}) {
     function updatePreferences(newPreferences) {
         setPreferences({...preferences, ...newPreferences})
         window.localStorage.setItem("preferences", JSON.stringify({...preferences, ...newPreferences}))
+        //Record config for analytics
+        for (const [key, val] of Object.entries(newPreferences)) {
+            gtag('event','config_change', {change: key, to: val})
+        }
     }
 
     return (

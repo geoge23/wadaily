@@ -31,7 +31,10 @@ export default function SettingsModal({visible, setVisible}) {
                 <Button text="Clear Announcement Cache" buttonText="Run" onChange={() => {window.localStorage.setItem('seen-announcements', "{}")}}>
                     Clear cache of seen announcements if it overflows.
                 </Button>
-                <Button text="Update Class Names" onChange={() => {setDaysModalVisible(true)}}>
+                <Button text="Update Class Names" onChange={() => {
+                    setDaysModalVisible(true);
+                    gtag('event','view_class_names');
+                }}>
                     Set your class names so that they display on the schedule.
                 </Button>
                 <p className="mt-4">From the WADaily Team ☕</p>

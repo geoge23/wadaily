@@ -60,6 +60,7 @@ export default function Home(props) {
     const time = parseWaDate(date)
     time.setDate(time.getDate() + num)
     updateUI(time)
+    gtag('event','seek_days', {change: num})
   }
 
   function handleChangeCafeteria(e) {
@@ -82,6 +83,7 @@ export default function Home(props) {
           .then(() => setLoading(false))
         break;
     }
+    gtag('event','view_cafeteria', {to: e})
   }
 
   async function updateUI(time) {
