@@ -17,7 +17,7 @@ export default function SettingsModal({visible, setVisible}) {
                     Shows progress along the red line next to the schedule as the day progresses
                 </Checkbox>
                 <Checkbox text="Holiday Theming" checked={ctx.preferences.theming} onChange={() => ctx.updatePreferences({theming: !ctx.preferences.theming})}>
-                    Ignore themes and additions for the holidays.
+                    Show themes and additions for the holidays.
                 </Checkbox>
                 <Checkbox text="Upload Analytics" checked={true} onChange={() => {alert("Feature not supported!")}}>
                     Opt out of analytics for service improvement. Not recommended to change.
