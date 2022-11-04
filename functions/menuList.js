@@ -1,4 +1,4 @@
-import Cache from 'node-cache'
+import Cache from 'node-cache';
 const foodCache = new Cache()
 
 export default async function getMenuList(date, cafe = "upper-school") {

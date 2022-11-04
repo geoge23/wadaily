@@ -1,5 +1,5 @@
-import { useEffect, useState, useContext } from "react";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { useContext, useState } from "react";
+import CloseButton from "./CloseButton";
 import DaysModal from "./DaysModal";
 import Modal from "./Modal";
 import { PreferencesContext } from "./PreferencesContext";
@@ -8,16 +8,16 @@ export default function SettingsModal({visible, setVisible}) {
     const ctx = useContext(PreferencesContext);
     const [daysModalVisible, setDaysModalVisible] = useState(false);
 
-    return (visible && <Modal style={{minWidth: '30%', overflowY: "scroll"}}>
+    return (visible && <Modal style={{minWidth: '30%'}}>
             <DaysModal setVisible={setDaysModalVisible} visible={daysModalVisible} />
-            <p className="absolute top-3 right-4 cursor-pointer" onClick={() => setVisible(false)}>x</p>
+            <CloseButton onClick={() => setVisible(false)}></CloseButton>
             <p className="text-2xl">Preferences</p>
-            <div style={{maxHeight: 470, overflowY: 'scroll'}}>
+            <div style={{maxHeight: 470, overflowY: 'scroll'}} className="scrollbar">
                 <Checkbox text="Show progress across the day" checked={ctx.preferences.showProgressAcrossDays} onChange={() => ctx.updatePreferences({showProgressAcrossDays: !ctx.preferences.showProgressAcrossDays})}>
                     Shows progress along the red line next to the schedule as the day progresses
                 </Checkbox>
                 <Checkbox text="Holiday Theming" checked={ctx.preferences.theming} onChange={() => ctx.updatePreferences({theming: !ctx.preferences.theming})}>
-                    Ignore themes and additions for the holidays.
+                    Show themes and additions for the holidays.
                 </Checkbox>
                 <Checkbox text="Upload Analytics" checked={true} onChange={() => {alert("Feature not supported!")}}>
                     Opt out of analytics for service improvement. Not recommended to change.
@@ -28,7 +28,7 @@ export default function SettingsModal({visible, setVisible}) {
                 <Checkbox text="West Commons" checked={ctx.preferences.westCommons} onChange={() => ctx.updatePreferences({westCommons: !ctx.preferences.westCommons})}>
                     Show West Commons over the cafeteria for lunch by default.
                 </Checkbox>
-                <Button text="Clear Announcement Cache" buttonText="Run" onChange={() => {window.localStorage.setItem('seen-announcements', "{}")}}>
+                <Button text="Clear Announcement Cache" buttonText="Clear" onChange={() => {window.localStorage.setItem('seen-announcements', "[]")}}>
                     Clear cache of seen announcements if it overflows.
                 </Button>
                 <Button text="Update Class Names" onChange={() => {

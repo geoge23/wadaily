@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import CloseButton from "./CloseButton";
 import Modal from "./Modal";
 import { PreferencesContext } from "./PreferencesContext";
 
@@ -42,7 +43,7 @@ export default function NotificationModal() {
     if (!ctx.preferences.announcements) return <></>
 
     return (visible && <Modal style={{minWidth: '30%'}}>
-            <p className="absolute top-3 right-4 cursor-pointer" onClick={() => setVisible(false)}>x</p>
+            <CloseButton onClick={() => setVisible(false)}></CloseButton>
             <p className="text-xl mr-5">{notifications[viewing].title}</p>
             <p dangerouslySetInnerHTML={{__html: notifications[viewing].text}}></p>
             {notifications[viewing].link && <a href={notifications[viewing].link} className="underline mt-2">Click here</a>}

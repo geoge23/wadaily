@@ -1,7 +1,7 @@
 import { IconContext } from "react-icons";
-import { BsCircleFill, BsQuestion, BsCloudRainFill, BsCloudFill, BsCloudSnowFill, BsLightningFill, BsCloudSleetFill } from 'react-icons/bs';
-import { RiMistFill, RiTornadoFill } from 'react-icons/ri'
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
+import { BsCircleFill, BsCloudFill, BsCloudRainFill, BsCloudSnowFill, BsLightningFill, BsQuestion } from 'react-icons/bs';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { RiMistFill, RiTornadoFill } from 'react-icons/ri';
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
