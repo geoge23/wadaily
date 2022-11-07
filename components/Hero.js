@@ -13,7 +13,6 @@ export default function Hero({day, isDifferentDay = false}) {
         w-full md:flex-row flex-col
         relative overflow-hidden
     `} ref={ref}>
-        {ctx.preferences.theming && <Leaves divRef={ref} />}
         <div className="z-10">
             <p className={"text-white text-2xl font-light tracking-wider"}>{isDifferentDay ? "This day is a" : "Today is a"}</p>
             <p className={"text-white text-4xl md:text-5xl font-bold"}>{day}</p>
@@ -21,6 +20,7 @@ export default function Hero({day, isDifferentDay = false}) {
         <div className={"md:mt-0 mt-2"}>
             <p className={"text-white"}>Open βeta • <a className="underline" href="https://forms.gle/pWSrxjLcbAtqtoax7">Report an Issue »</a></p>
         </div>
+        {ctx.preferences.theming && <Leaves divRef={ref} />}
     </div>)
 }
 
