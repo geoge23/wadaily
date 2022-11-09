@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 export default function List({content = [{type: 'title', text: 'No data available'}], title, itemsCollapsible, children}) {
     return <div className={""}>
-        {title ? <p className={`text-3xl font-bold ${children ? null : "mb-3"}`}>{title}</p> : null}
+        {title ? <p className={`text-4xl font-bold ${children ? null : "mb-3"}`}>{title}</p> : null}
         {children}
         {content.map((e, i) => {
         switch (e.type) {

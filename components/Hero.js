@@ -1,7 +1,7 @@
 import { useEffect, memo, useRef, useContext } from "react"
 import { PreferencesContext } from "./PreferencesContext"
 
-export default function Hero({day, isDifferentDay = false, widescreen = false}) {
+export default function Hero({day, isDifferentDay = false, widescreen = false, temp}) {
     const ref = useRef(null)
     const ctx = useContext(PreferencesContext)
 
@@ -20,6 +20,7 @@ export default function Hero({day, isDifferentDay = false, widescreen = false}) 
         {widescreen && <div className="z-10">
             <p className={"text-white text-4xl font-light tracking-wider"}>{isDifferentDay ? "This day is a" : "Today is a"}</p>
             <p className={"text-white text-4xl md:text-7xl font-bold"}>{day}</p>
+            <p className={"text-white text-lg font-light tracking-wider"}>{temp}°F • College Park</p>
         </div>}
         {!widescreen && <div className={"md:mt-0 mt-2"}>
             <p className={"text-white"}>Open βeta • <a className="underline" href="https://forms.gle/pWSrxjLcbAtqtoax7">Report an Issue »</a></p>
@@ -30,6 +31,7 @@ export default function Hero({day, isDifferentDay = false, widescreen = false}) 
         {ctx.preferences.theming && <Leaves divRef={ref} />}
     </div>)
 }
+
 
 const Leaves = memo(function Leaves({divRef}) {
     function Leaf() {

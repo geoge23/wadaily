@@ -4,9 +4,9 @@ import { useRouter } from "next/dist/client/router";
 import Head from 'next/head';
 import Cache from "node-cache";
 import { useContext, useEffect, useState } from "react";
-import Footer from '../components/Footer';
-import Header from "../components/Header";
+
 import Hero from "../components/Hero";
+import BottomLogo from "../components/BottomLogo";
 import List from "../components/List";
 import Loader from "../components/Loader";
 import NoSchool from "../components/NoSchool";
@@ -117,6 +117,7 @@ export default function Home(props) {
         isDifferentDay={date != props.date} 
         widescreen={true}
         showWeather={true}
+        temp={props.temp}
       />
 
       <NotificationModal />
@@ -128,7 +129,7 @@ export default function Home(props) {
 
       {friendlyName != "No School Day" ?
       <>
-        <div className={"grid box-border px-24 md:grid-cols-2 grid-cols-1 center"}>
+        <div className={"grid box-border py-5 px-24 md:grid-cols-2 grid-cols-1 center"}>
           <Schedule 
             items={schedule}
             isDifferentDay={date != props.date} 
@@ -140,7 +141,7 @@ export default function Home(props) {
             </List>
           </div>
         </div>
-        <div className={"my-4 mb-8 box-border px-8"}>
+        <div className={"my-4 mx-16 mb-8 box-border px-8"}>
           <span id="schedule"></span>
           <List 
             title="Scheduled for Today" 
@@ -149,6 +150,7 @@ export default function Home(props) {
           />
         </div>
       </> : <NoSchool />}
+      <BottomLogo></BottomLogo>
     </div>
   )
 }
