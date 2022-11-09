@@ -11,7 +11,7 @@ export default function Hero({day, isDifferentDay = false, widescreen = false, t
         bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 
         dark-bg-none dark:bg-gray-500
         w-full md:flex-row flex-col relative overflow-hidden
-        ${widescreen ? "w-screen absolute left-0 top-0 h-52 py-12 px-20": "rounded-2xl h-60 py-5 px-6"}
+        ${widescreen ? "w-screen absolute left-0 top-0 h-52 py-7 px-20": "rounded-2xl h-60 py-5 px-6"}
 `} ref={ref}>
         {!widescreen && <div className="z-10">
             <p className={"text-white text-2xl font-light tracking-wider"}>{isDifferentDay ? "This day is a" : "Today is a"}</p>
@@ -26,7 +26,7 @@ export default function Hero({day, isDifferentDay = false, widescreen = false, t
             <p className={"text-white"}>Open βeta • <a className="underline" href="https://forms.gle/pWSrxjLcbAtqtoax7">Report an Issue »</a></p>
         </div>}
         {widescreen && <div className={"md:mt-0 mt-2"}>
-            <p className={"text-white text-6xl py-5 md:text-5.5xl font-semibold"}>{dateString}</p>
+            <p className={"text-white text-6xl py-9 md:text-5.5xl font-semibold"}>{dateString}</p>
         </div>}
         {ctx.preferences.theming && <Leaves divRef={ref} />}
     </div>)
