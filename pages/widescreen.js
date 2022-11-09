@@ -22,6 +22,7 @@ import getScheduleList from "../functions/schedule";
 
 const weatherCache = new Cache();
 
+
 export default function Home(props) {
   const [schedule, setSchedule] = useState(props.schedule);
   const [friendlyName, setFriendlyName] = useState(props.friendlyName);
@@ -103,27 +104,19 @@ export default function Home(props) {
   }
 
   return (
-    <div className="main-page">
+    <div>
       {loading && <Loader />}
       <Head>
         <title>WADaily</title>
         <meta name="description" content="View your schedule, menu, and announcements for Woodward Academy quicky and efficiently!"></meta>
       </Head>
 
-      <Header />
-      <span id="header"></span>
 
       <Hero 
         day={friendlyName} 
         isDifferentDay={date != props.date} 
-      />
-
-      <WeatherBar 
-        temp={props.temp} 
-        icon={props.icon} 
-        date={date} 
-        forward={() => progressByDays(1)} 
-        back={() => progressByDays(-1)} 
+        widescreen={true}
+        showWeather={true}
       />
 
       <NotificationModal />
@@ -135,20 +128,15 @@ export default function Home(props) {
 
       {friendlyName != "No School Day" ?
       <>
-        <div className={"grid box-border px-8 md:grid-cols-2 grid-cols-1"}>
+        <div className={"grid box-border px-24 md:grid-cols-2 grid-cols-1 center"}>
           <Schedule 
             items={schedule}
             isDifferentDay={date != props.date} 
           />
           <div className={"md:mt-0 mt-4"}>
+            
             <span id="lunch"></span>
-            <List content={menuList} title="Lunch">
-              <RadioSelector 
-                options={["Cafeteria", "West Commons"]} 
-                className="mt-1"
-                state={selectedCafeteria} 
-                setState={handleChangeCafeteria} 
-              />
+            <List content={menuList} title="Lunch Menu">
             </List>
           </div>
         </div>
@@ -161,8 +149,6 @@ export default function Home(props) {
           />
         </div>
       </> : <NoSchool />}
-
-      <Footer />
     </div>
   )
 }
