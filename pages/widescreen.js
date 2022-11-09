@@ -118,6 +118,7 @@ export default function Home(props) {
         widescreen={true}
         showWeather={true}
         temp={props.temp}
+        icon={props.icon}
       />
 
       <NotificationModal />
