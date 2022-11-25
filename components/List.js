@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function List({content = [{type: 'title', text: 'No data available'}], title, itemsCollapsible, children}) {
+export default function List({content = [{type: 'title', text: 'No data available'}], title, itemsCollapsible, children, truncate}) {
     return <div className={""}>
         {title ? <p className={`text-4xl font-bold ${children ? null : "mb-3"}`}>{title}</p> : null}
         {children}
         {content.map((e, i) => {
+            //Stops printing list entries after a certain amount of times, value can be changed in the list command, used in the widescreen to make it all fit on one page
+            if (truncate && i > truncate) return null;
         switch (e.type) {
             case 'title':
                 return (<p key={i} className={"font-semibold mb-2 uppercase tracking-wider text-2xl"}>{e.text}</p>)

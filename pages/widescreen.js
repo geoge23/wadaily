@@ -12,9 +12,7 @@ import Loader from "../components/Loader";
 import NoSchool from "../components/NoSchool";
 import NotificationModal from "../components/NotificationModal";
 import { PreferencesContext } from "../components/PreferencesContext";
-import RadioSelector from "../components/RadioSelector";
 import Schedule from "../components/Schedule";
-import WeatherBar from "../components/WeatherBar";
 import getCalendarList from "../functions/calendar";
 import getScheduleDay from "../functions/day";
 import getMenuList from "../functions/menuList";
@@ -30,7 +28,6 @@ export default function Home(props) {
   const [menuList, setMenuList] = useState(props.menuList);
   const [loading, setLoading] = useState(false);
   const [date, setDate] = useState(props.date);
-  const [selectedCafeteria, setSelectedCafeteria] = useState("Cafeteria");
   const router = useRouter()
 
   const ctx = useContext(PreferencesContext);
@@ -54,37 +51,6 @@ export default function Home(props) {
   function parseWaDate(dateText) {
     const dateArray = dateText.split('-').map(e => parseInt(e));
     return new Date(dateArray[2] + 2000, dateArray[0] - 1, dateArray[1]);
-  }
-
-  function progressByDays(num) {
-    setLoading(true);
-    const time = parseWaDate(date)
-    time.setDate(time.getDate() + num)
-    updateUI(time)
-    gtag('event','seek_days', {change: num})
-  }
-
-  function handleChangeCafeteria(e) {
-    setSelectedCafeteria(e)
-    const time = parseWaDate(date)
-    const now = `${time.getMonth() + 1}-${time.getDate()}-${time.getFullYear() % 100}`
-    switch (e) {
-      case "Cafeteria":
-        setLoading(true)
-        fetch(`/api/lunchList?date=${now}`)
-          .then(e => e.json())
-          .then(e => setMenuList(e))
-          .then(() => setLoading(false))
-        break;
-      case "West Commons":
-        setLoading(true)
-        fetch(`/api/westCommonsList?date=${now}`)
-          .then(e => e.json())
-          .then(e => setMenuList(e))
-          .then(() => setLoading(false))
-        break;
-    }
-    gtag('event','view_cafeteria', {to: e})
   }
 
   async function updateUI(time) {
@@ -119,6 +85,7 @@ export default function Home(props) {
         showWeather={true}
         temp={props.temp}
         icon={props.icon}
+        sticky={true}
       />
 
       <NotificationModal />
@@ -130,20 +97,24 @@ export default function Home(props) {
 
       {friendlyName != "No School Day" ?
       <>
+      
         <div className={"grid box-border py-5 px-24 md:grid-cols-2 grid-cols-1 center"}>
           <Schedule 
             items={schedule}
-            isDifferentDay={date != props.date} 
+            isDifferentDay={date != props.date}
+            widescreen ={true} 
           />
           <div className={"md:mt-0 mt-4"}>
             
             <span id="lunch"></span>
-            <List content={menuList} title="Lunch Menu">
+            <List content={menuList} title="Lunch Menu" truncate={7}>
             </List>
           </div>
         </div>
         <div className={"my-4 mx-16 mb-8 box-border px-8"}>
           <span id="schedule"></span>
+          
+          
           <List 
             title="Scheduled for Today" 
             itemsCollapsible={true} 

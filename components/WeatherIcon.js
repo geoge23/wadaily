@@ -3,10 +3,6 @@ import { BsCircleFill, BsCloudFill, BsCloudRainFill, BsCloudSnowFill, BsLightnin
 import { RiMistFill, RiTornadoFill } from 'react-icons/ri';
 
 export default function WeatherIcon({icon}) {
-
-    return (<WeatherIconSelector icon={icon}></WeatherIconSelector>)}
-
-    function WeatherIconSelector({icon}) {
     function IconSwitch(icon) {
         const iconClass = Math.floor(icon / 100);
         switch (iconClass) {
