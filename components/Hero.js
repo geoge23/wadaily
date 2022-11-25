@@ -1,6 +1,7 @@
 import { useEffect, memo, useRef, useContext } from "react"
 import { PreferencesContext } from "./PreferencesContext"
 import WeatherIcon from "./WeatherIcon"
+import DateString from "../components/DateString";
 
 export default function Hero({day, isDifferentDay = false, widescreen = false, sticky = false, temp, icon}) {
     const ref = useRef(null)
@@ -33,7 +34,7 @@ export default function Hero({day, isDifferentDay = false, widescreen = false, s
             <p className={"text-white"}>Open βeta • <a className="underline" href="https://forms.gle/pWSrxjLcbAtqtoax7">Report an Issue »</a></p>
         </div>}
         {widescreen && <div className={"md:mt-0 mt-2"}>
-            <p className={"text-white text-5xl py-9 md:text-5.5xl font-semibold"}>{dateString}</p>
+            <DateString></DateString>
         </div>}
         {ctx.preferences.theming && <Leaves divRef={ref} />}
     </div>)
@@ -72,40 +73,3 @@ const Leaves = memo(function Leaves({divRef}) {
         {Array.from({length: 20}).map((e, i) => <Leaf key={i} />)}
     </div>)
 })
-
-//Widescreen date function: Returns (ex) "Tuesday, November 8th" for the widescreen view
-const nth = function (d) {
-    if (d > 3 && d < 21) return "th";
-    switch (d % 10) {
-      case 1:
-        return "st";
-      case 2:
-        return "nd";
-      case 3:
-        return "rd";
-      default:
-        return "th";
-    }
-  };
-  
-  const dateObj = new Date();
-  const date = dateObj.getDate();
-  const month = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ][dateObj.getMonth()];
-  
-  const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-  let dayOfWeek = weekday[dateObj.getDay()];
-  
-  var dateString = dayOfWeek + ", " + month + " " + date + nth(date);
