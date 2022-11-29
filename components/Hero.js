@@ -1,9 +1,9 @@
 import { useEffect, memo, useRef, useContext } from "react"
 import { PreferencesContext } from "./PreferencesContext"
 import WeatherIcon from "./WeatherIcon"
-import DateString from "../components/DateString";
+import WidescreenDateText from "./WidescreenDateText";
 
-export default function Hero({day, isDifferentDay = false, widescreen = false, sticky = false, temp, icon}) {
+export default function Hero({day, isDifferentDay = false, widescreen = false, temp, icon}) {
     const ref = useRef(null)
     const ctx = useContext(PreferencesContext)
 
@@ -26,7 +26,7 @@ export default function Hero({day, isDifferentDay = false, widescreen = false, s
             </div>}
         </div>
         {widescreen ? <div className={"md:mt-0 mt-2"}>
-            <DateString></DateString>
+            <WidescreenDateText></WidescreenDateText>
         </div> : <div className={"md:mt-0 mt-2"}>
             <p className={"text-white"}>Open βeta • <a className="underline" href="https://forms.gle/pWSrxjLcbAtqtoax7">Report an Issue »</a></p>
         </div>}
