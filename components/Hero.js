@@ -46,7 +46,7 @@ const Leaves = memo(function Leaves({divRef}) {
             let y = Math.random() * -bound;
             let x = 1;
             let q = Math.random() * 5 + 10
-            ref.current.innerText = ["🍂", "🍁", "🌰", "🎃", "🦃"][Math.floor(Math.random() * 5)]
+            ref.current.innerText = ["🎄", "✨", "❄️", "☃️", "⭐️"][Math.floor(Math.random() * 5)]
             let interval = setInterval(() => {
                 y += 1
                 x = Math.sin(y / q) * q
