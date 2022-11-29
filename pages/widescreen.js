@@ -1,17 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { useRouter } from "next/dist/client/router";
 import Head from 'next/head';
 import Cache from "node-cache";
-import { useContext, useEffect, useState } from "react";
 
-import Hero from "../components/Hero";
 import BottomLogo from "../components/BottomLogo";
+import Hero from "../components/Hero";
 import List from "../components/List";
-import Loader from "../components/Loader";
 import NoSchool from "../components/NoSchool";
-import NotificationModal from "../components/NotificationModal";
-import { PreferencesContext } from "../components/PreferencesContext";
 import Schedule from "../components/Schedule";
 import getCalendarList from "../functions/calendar";
 import getScheduleDay from "../functions/day";
