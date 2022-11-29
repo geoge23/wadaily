@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/dist/client/router";
 import Head from 'next/head';
-import Cache from "node-cache";
 import { useContext, useEffect, useState } from "react";
 import Footer from '../components/Footer';
 import Header from "../components/Header";
@@ -19,8 +18,7 @@ import getCalendarList from "../functions/calendar";
 import getScheduleDay from "../functions/day";
 import getMenuList from "../functions/menuList";
 import getScheduleList from "../functions/schedule";
-
-const weatherCache = new Cache();
+import getWeather from "../functions/weather";
 
 export default function Home(props) {
   const [schedule, setSchedule] = useState(props.schedule);
@@ -168,25 +166,18 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps(ctx) {
-  let weather = weatherCache.get('weather');
-  if (weather == undefined) {
-    let fetchedWeather = await fetch(`http://api.openweathermap.org/data/2.5/weather?zip=30337&appid=${process.env.WEATHER_KEY}&units=imperial`)
-    weather = await fetchedWeather.json();
-    weatherCache.set('weather', weather, 60);
-  }
-  const {main: wTemp, weather: conditions} = weather;
   const Now = new Date();
   const date = `${Now.getMonth() + 1}-${Now.getDate()}-${Now.getFullYear() % 100}`
   const day = await getScheduleDay(date);
   const scheduleList = await getScheduleList(day);
+  const weather = await getWeather();
   const menuList = await getMenuList();
   const calendarList = await getCalendarList();
   
   return {
     props: {
-      temp: Math.round(wTemp.temp),
-      icon: conditions[0].id,
       ...scheduleList,
+      ...weather,
       menuList,
       date,
       calendarList

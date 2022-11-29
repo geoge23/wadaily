@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
 import Head from 'next/head';
-import Cache from "node-cache";
 
 import BottomLogo from "../components/BottomLogo";
 import Hero from "../components/Hero";
@@ -12,8 +11,7 @@ import getCalendarList from "../functions/calendar";
 import getScheduleDay from "../functions/day";
 import getMenuList from "../functions/menuList";
 import getScheduleList from "../functions/schedule";
-
-const weatherCache = new Cache();
+import getWeather from '../functions/weather';
 
 
 export default function Home({schedule, friendlyName, calendarList, menuList, date, ...props}) {
@@ -67,26 +65,20 @@ export default function Home({schedule, friendlyName, calendarList, menuList, da
   )
 }
 
-export async function getServerSideProps(ctx) {
-  let weather = weatherCache.get('weather');
-  if (weather == undefined) {
-    let fetchedWeather = await fetch(`http://api.openweathermap.org/data/2.5/weather?zip=30337&appid=${process.env.WEATHER_KEY}&units=imperial`)
-    weather = await fetchedWeather.json();
-    weatherCache.set('weather', weather, 60);
-  }
-  const {main: wTemp, weather: conditions} = weather;
+export async function getServerSideProps() {
+  
   const Now = new Date();
   const date = `${Now.getMonth() + 1}-${Now.getDate()}-${Now.getFullYear() % 100}`
   const day = await getScheduleDay(date);
   const scheduleList = await getScheduleList(day);
   const menuList = await getMenuList();
   const calendarList = await getCalendarList();
+  const weather = await getWeather();
   
   return {
     props: {
-      temp: Math.round(wTemp.temp),
-      icon: conditions[0].id,
       ...scheduleList,
+      ...weather,
       menuList,
       date,
       calendarList
