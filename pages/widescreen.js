@@ -21,57 +21,10 @@ import getScheduleList from "../functions/schedule";
 const weatherCache = new Cache();
 
 
-export default function Home(props) {
-  const [schedule, setSchedule] = useState(props.schedule);
-  const [friendlyName, setFriendlyName] = useState(props.friendlyName);
-  const [calendarList, setCalendarList] = useState(props.calendarList);
-  const [menuList, setMenuList] = useState(props.menuList);
-  const [loading, setLoading] = useState(false);
-  const [date, setDate] = useState(props.date);
-  const router = useRouter()
-
-  const ctx = useContext(PreferencesContext);
-
-  useEffect(() => {
-    window.addEventListener('focus', () => {
-      const Now = new Date();
-      const currentDate = `${Now.getMonth() + 1}-${Now.getDate()}-${Now.getFullYear() % 100}`
-      if (props.date != currentDate) {
-        router.reload()
-      }
-    })
-  }, [props.date, router])
-
-  useEffect(() => {
-    if (ctx.preferences.westCommons) {
-      setSelectedCafeteria("West Commons")
-    }
-  }, [ctx.preferences.westCommons])
-
-  function parseWaDate(dateText) {
-    const dateArray = dateText.split('-').map(e => parseInt(e));
-    return new Date(dateArray[2] + 2000, dateArray[0] - 1, dateArray[1]);
-  }
-
-  async function updateUI(time) {
-    const now = `${time.getMonth() + 1}-${time.getDate()}-${time.getFullYear() % 100}`
-    const {schedule: newSchedule, friendlyName: newFriendlyName, name} = await (await fetch(`/api/schedule?date=${now}`)).json();
-    if (name != "NONE") {
-      const lunchList = await (await fetch(`/api/lunchList?date=${now}`)).json();
-      const calendar = await (await fetch(`/api/calendar?date=${now}`)).json();
-      setMenuList(lunchList);
-      setCalendarList(calendar);
-    }
-    setSelectedCafeteria("Cafeteria")
-    setSchedule(newSchedule);
-    setFriendlyName(newFriendlyName);
-    setDate(now);
-    setLoading(false);
-  }
+export default function Home({schedule, friendlyName, calendarList, menuList, date, ...props}) {
 
   return (
     <div>
-      {loading && <Loader />}
       <Head>
         <title>WADaily</title>
         <meta name="description" content="View your schedule, menu, and announcements for Woodward Academy quicky and efficiently!"></meta>
@@ -88,20 +41,12 @@ export default function Home(props) {
         sticky={true}
       />
 
-      <NotificationModal />
-
-      {date == props.date ? null : <p className="text-center mb-4 mt-0">You are viewing info for {date} • <a className="cursor-pointer underline" onClick={() => {
-        setLoading(true);
-        updateUI(new Date())
-      }}>See Today</a></p>}
-
       {friendlyName != "No School Day" ?
       <>
       
         <div className={"grid box-border py-5 px-24 md:grid-cols-2 grid-cols-1 center"}>
           <Schedule 
             items={schedule}
-            isDifferentDay={date != props.date}
             widescreen ={true} 
           />
           <div className={"md:mt-0 mt-4"}>
