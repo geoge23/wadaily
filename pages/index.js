@@ -103,7 +103,7 @@ export default function Home(props) {
   }
 
   return (
-    <div>
+    <div className="main-page">
       {loading && <Loader />}
       <Head>
         <title>WADaily</title>

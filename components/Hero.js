@@ -1,28 +1,39 @@
 import { useEffect, memo, useRef, useContext } from "react"
 import { PreferencesContext } from "./PreferencesContext"
+import WeatherIcon from "./WeatherIcon"
+import WidescreenDateText from "./WidescreenDateText";
 
-export default function Hero({day, isDifferentDay = false}) {
+export default function Hero({day, isDifferentDay = false, widescreen = false, temp, icon}) {
     const ref = useRef(null)
     const ctx = useContext(PreferencesContext)
 
     return (<div name="home" className={`
-        md:justify-between justify-end box-border px-6 py-5 
-        md:items-end rounded-2xl shadow-lg h-60 flex 
+        md:justify-between justify-end box-border
+        md:items-end shadow-lg flex 
         bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 
         dark-bg-none dark:bg-gray-500
-        w-full md:flex-row flex-col
-        relative overflow-hidden
+        w-full md:flex-row flex-col relative overflow-hidden
+        ${widescreen ? "w-screen z-50 left-0 top-0 h-52 py-7 px-20 sticky": "rounded-2xl h-60 py-5 px-6"}
     `} ref={ref}>
         <div className="z-10">
             <p className={"text-white text-2xl font-light tracking-wider"}>{isDifferentDay ? "This day is a" : "Today is a"}</p>
-            <p className={"text-white text-4xl md:text-5xl font-bold"}>{day}</p>
+            <p className={"text-white text-4xl md:text-6xl font-bold"}>{day}</p>
+            {widescreen && <div className={"flex flex-row mt-3"}>
+                <div className={"py-1 px-2"}>
+                    <WeatherIcon icon={icon}></WeatherIcon>
+                </div>
+                <p className={"text-white text-lg font-light tracking-wider py"}>{temp}°F • College Park</p>
+            </div>}
         </div>
-        <div className={"md:mt-0 mt-2"}>
+        {widescreen ? <div className={"md:mt-0 mt-2"}>
+            <WidescreenDateText></WidescreenDateText>
+        </div> : <div className={"md:mt-0 mt-2"}>
             <p className={"text-white"}>Open βeta • <a className="underline" href="https://forms.gle/pWSrxjLcbAtqtoax7">Report an Issue »</a></p>
-        </div>
+        </div>}
         {ctx.preferences.theming && <Leaves divRef={ref} />}
     </div>)
 }
+
 
 const Leaves = memo(function Leaves({divRef}) {
     function Leaf() {
@@ -35,7 +46,7 @@ const Leaves = memo(function Leaves({divRef}) {
             let y = Math.random() * -bound;
             let x = 1;
             let q = Math.random() * 5 + 10
-            ref.current.innerText = ["🍂", "🍁", "🌰", "🎃"][Math.floor(Math.random() * 4)]
+            ref.current.innerText = ["🍂", "🍁", "🌰", "🎃", "🦃"][Math.floor(Math.random() * 5)]
             let interval = setInterval(() => {
                 y += 1
                 x = Math.sin(y / q) * q
