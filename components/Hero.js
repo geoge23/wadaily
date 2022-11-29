@@ -15,26 +15,20 @@ export default function Hero({day, isDifferentDay = false, widescreen = false, s
         w-full md:flex-row flex-col relative overflow-hidden
         ${widescreen ? "w-screen z-50 left-0 top-0 h-52 py-7 px-20 sticky": "rounded-2xl h-60 py-5 px-6"}
 `} ref={ref}>
-        {!widescreen && <div className="z-10">
+        <div className="z-10">
             <p className={"text-white text-2xl font-light tracking-wider"}>{isDifferentDay ? "This day is a" : "Today is a"}</p>
-            <p className={"text-white text-4xl md:text-5xl font-bold"}>{day}</p>
-        </div>}
-        {widescreen && <div className="z-10">
-            <p className={"text-white text-4xl font-light tracking-wider"}>{isDifferentDay ? "This day is a" : "Today is a"}</p>
-            <p className={"text-white text-4xl md:text-7xl font-bold"}>{day}</p>
-            <div className={"flex flex-row"}>
+            <p className={"text-white text-4xl md:text-6xl font-bold"}>{day}</p>
+            {widescreen && <div className={"flex flex-row mt-3"}>
                 <div className={"py-1 px-2"}>
                     <WeatherIcon icon={icon}></WeatherIcon>
                 </div>
                 <p className={"text-white text-lg font-light tracking-wider py"}>{temp}°F • College Park</p>
-            </div>
-
-        </div>}
-        {!widescreen && <div className={"md:mt-0 mt-2"}>
-            <p className={"text-white"}>Open βeta • <a className="underline" href="https://forms.gle/pWSrxjLcbAtqtoax7">Report an Issue »</a></p>
-        </div>}
-        {widescreen && <div className={"md:mt-0 mt-2"}>
+            </div>}
+        </div>
+        {widescreen ? <div className={"md:mt-0 mt-2"}>
             <DateString></DateString>
+        </div> : <div className={"md:mt-0 mt-2"}>
+            <p className={"text-white"}>Open βeta • <a className="underline" href="https://forms.gle/pWSrxjLcbAtqtoax7">Report an Issue »</a></p>
         </div>}
         {ctx.preferences.theming && <Leaves divRef={ref} />}
     </div>)
