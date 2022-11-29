@@ -44,7 +44,7 @@ export default function Home(props) {
 
   useEffect(() => {
     if (ctx.preferences.westCommons) {
-      setSelectedCafeteria("West Commons")
+      handleChangeCafeteria("West Commons")
     }
   }, [ctx.preferences.westCommons])
 
