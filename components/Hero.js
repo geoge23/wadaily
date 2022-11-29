@@ -14,7 +14,7 @@ export default function Hero({day, isDifferentDay = false, widescreen = false, t
         dark-bg-none dark:bg-gray-500
         w-full md:flex-row flex-col relative overflow-hidden
         ${widescreen ? "w-screen z-50 left-0 top-0 h-52 py-7 px-20 sticky": "rounded-2xl h-60 py-5 px-6"}
-`} ref={ref}>
+    `} ref={ref}>
         <div className="z-10">
             <p className={"text-white text-2xl font-light tracking-wider"}>{isDifferentDay ? "This day is a" : "Today is a"}</p>
             <p className={"text-white text-4xl md:text-6xl font-bold"}>{day}</p>
