@@ -9,11 +9,11 @@ export default function Hero({day, isDifferentDay = false, widescreen = false, t
 
     return (<div name="home" className={`
         md:justify-between justify-end box-border
-        md:items-end shadow-lg flex 
-        bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 
+        md:items-end shadow-lg flex bg-gradient-to-r 
         dark-bg-none dark:bg-gray-500
         w-full md:flex-row flex-col relative overflow-hidden
         ${widescreen ? "w-screen z-50 left-0 top-0 h-52 py-7 px-20 sticky": "rounded-2xl h-60 py-5 px-6"}
+        ${ctx.preferences.theming ? "from-blue-200 to-blue-500" : "from-yellow-400 via-red-500 to-pink-500" }
     `} ref={ref}>
         <div className="z-10">
             <p className={"text-white text-2xl font-light tracking-wider"}>{isDifferentDay ? "This day is a" : "Today is a"}</p>

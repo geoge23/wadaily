@@ -28,6 +28,12 @@ a {
   box-sizing: border-box;
 }
 
+@media (prefers-color-scheme: light) {
+  .red-img-to-blue {
+    filter: hue-rotate(207deg);
+  }
+}
+
 
 @media (prefers-color-scheme: dark) {
   .dark-bg-none {
