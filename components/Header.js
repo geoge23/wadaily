@@ -14,7 +14,7 @@ export default function Header() {
 
     return (
         <header className={"my-5 flex justify-between"}>
-            <img src={"logo.png"} alt="Logo" className={`h-16 ${ctx.preferences.theming ? "red-img-to-blue" : ""}`} />
+            <img src={"logo.png"} alt="Logo" className={`h-16 ${ctx.preferences.theming ? "" : ""}`} />
             <div className={"flex items-center"}>
                 <Link func={() => {document.getElementById('header').scrollIntoView()}} text={"Today"}></Link>
                 <Link func={() => {document.getElementById('lunch').scrollIntoView()}} text={"Food"}></Link>
