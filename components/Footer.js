@@ -7,7 +7,7 @@ export default function Footer() {
                 This site is definitely affiliated with Woodward Academy • <a className="underline" rel="noreferrer" href={"./credits.html"} target="_blank">View Contributors »</a>
             </p>
             <span className={"flex w-full md:flex-row flex-col"}>
-                    <p className={"flex"}>Copyright © George Parks 2022</p>
+                    <p className={"flex"}>Copyright © George Parks 2023</p>
                     <p className={"md:ml-auto"}>Contact at <a href="mailto:me@georgeparks.me">me@georgeparks.me</a></p>
             </span>
         </div>
