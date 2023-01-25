@@ -14,6 +14,8 @@ export function PreferencesContextComponent({children}) {
         classNames: {}
     })
 
+    const [user, setUser] = useState(null)
+
     function updatePreferences(newPreferences) {
         setPreferences({...preferences, ...newPreferences})
         window.localStorage.setItem("preferences", JSON.stringify({...preferences, ...newPreferences}))
@@ -23,8 +25,12 @@ export function PreferencesContextComponent({children}) {
         }
     }
 
+    function loginUser(id) {
+
+    }
+
     return (
-        <PreferencesContext.Provider value={{preferences, updatePreferences}}>
+        <PreferencesContext.Provider value={{preferences, updatePreferences, user, loginUser}}>
             {children}
         </PreferencesContext.Provider>
     )

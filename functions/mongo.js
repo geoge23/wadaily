@@ -86,9 +86,19 @@ const AnnouncementSchema = new mongoose.Schema({
 
 const Announcements = mongoose.models.announcements || mongoose.model('announcements', AnnouncementSchema)
 
+const UserSchema = new mongoose.Schema({
+    name: String,
+    email: String,
+    studentId: String,
+    meta: Object
+})
+
+const Users = mongoose.models.announcements || mongoose.model('users', UserSchema)
+
 export {
     Days,
     Schedules,
     Notifications,
-    Announcements
+    Announcements,
+    Users
 };
