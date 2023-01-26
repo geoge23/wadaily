@@ -37,6 +37,12 @@ export default function SettingsModal({visible, setVisible}) {
                 }}>
                     Set your class names so that they display on the schedule.
                 </Button>
+                <Button text="Log out" buttonText="Log out" onChange={() => {
+                    window.localStorage.removeItem('token');
+                    window.location.reload();
+                }}>
+                    Sign out of your account
+                </Button>
                 <p className="mt-4">From the WADaily Team ☕</p>
                 <p className="opacity-70">But mostly George</p>
                 <p className="opacity-70">Version {VERSION} from {LASTCOMMITDATETIME}</p>

@@ -102,16 +102,16 @@ const UserSchema = new mongoose.Schema({
         required: true,
         default: {}
     },
-    credentials: {
-        type: Object,
+    emailVerified: {
+        type: Boolean,
         required: true,
-        default: {}
-    },
+        default: false
+    }
 }, {minimize: false})
 
 const Users = mongoose.models.users || mongoose.model('users', UserSchema)
 
-const ChallengeSchema = new mongoose.Schema({
+const VerifySchema = new mongoose.Schema({
     studentId: {
         type: String,
         required: true
@@ -122,11 +122,12 @@ const ChallengeSchema = new mongoose.Schema({
     },
     date: {
         type: Date,
-        required: true
+        required: true,
+        default: Date.now()
     },
 })
 
-const Challenges = mongoose.models.challenges || mongoose.model('challenges', ChallengeSchema)
+const Verifys = mongoose.models.verifys || mongoose.model('verifys', VerifySchema)
 
 export {
     Days,
@@ -134,5 +135,5 @@ export {
     Notifications,
     Announcements,
     Users,
-    Challenges
+    Verifys
 };

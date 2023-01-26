@@ -2,30 +2,21 @@ import { useContext, useRef } from "react";
 import Modal from "./Modal";
 import { PreferencesContext } from "./PreferencesContext";
 
-export default function AddDetailsModal({visible, setVisible, setLoginModal}) {
-    const ctx = useContext(PreferencesContext)
+export default function AddDetailsModal({visible, setVisible, loginUser, number}) {
     const name = useRef()
     const email = useRef()
 
-    function submitDetails() {
-        const id = ctx.user.studentId
+    async function submitDetails() {
         const nameVal = name.current.value
         const emailVal = email.current.value + "@woodward.edu"
 
-        fetch(`/api/user/update`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({id, name: nameVal, email: emailVal})
+        loginUser({
+            id: number,
+            name: nameVal,
+            email: emailVal
         })
-        .then(res => res.json())
-        .then(body => {
-            delete body.preferences
-            ctx.setUser(body)
-            setVisible(false)
-            setLoginModal(false)
-        })
+
+        setVisible(false)
     }
 
     return (visible && <Modal>

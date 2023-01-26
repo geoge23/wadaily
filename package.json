@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@azure/communication-email": "^1.0.0-beta.1",
     "@passwordless-id/webauthn": "^1.2.0",
     "git-revision-webpack-plugin": "^5.0.0",
     "mongoose": "^6.9.0",
