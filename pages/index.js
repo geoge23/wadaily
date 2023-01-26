@@ -8,6 +8,7 @@ import Header from "../components/Header";
 import Hero from "../components/Hero";
 import List from "../components/List";
 import Loader from "../components/Loader";
+import LoginModal from "../components/LoginModal";
 import NoSchool from "../components/NoSchool";
 import NotificationModal from "../components/NotificationModal";
 import { PreferencesContext } from "../components/PreferencesContext";

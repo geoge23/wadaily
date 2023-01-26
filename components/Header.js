@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react'
-import { BsGearFill } from 'react-icons/bs'
+import LoginModal from './LoginModal'
 import { PreferencesContext } from './PreferencesContext'
 import SettingsModal from './SettingsModal'
 
@@ -8,8 +8,21 @@ function Link({func = () => {}, text}) {
     return (<a className={"self-center ml-3 text-lg font-normal cursor-pointer"} onClick={func}>{text}</a>)
 }
 
+function formatName(n) {
+    //regex matches the .lastname@ of fn.ln@woodward.edu
+    //sees if teacher essentially
+    if (!n) return "?"
+    if (/\..+@/.test(n)) {
+        const names = n.split(".")
+        return `${names[0].substring(0,1)}${names[1].substring(0,1)}`.toUpperCase()
+    } else {
+        return n.replace(/[0-9]{2}/, "").substring(0,2).toUpperCase()
+    }
+}
+
 export default function Header() {
     const [settingsVisible, setSettingsVisible] = useState(false)
+    const [loginModalVisible, setLoginModalVisible] = useState(false);
     const ctx = useContext(PreferencesContext)
 
     return (
@@ -19,9 +32,15 @@ export default function Header() {
                 <Link func={() => {document.getElementById('header').scrollIntoView()}} text={"Today"}></Link>
                 <Link func={() => {document.getElementById('lunch').scrollIntoView()}} text={"Food"}></Link>
                 <Link func={() => {document.getElementById('schedule').scrollIntoView()}} text={"Events"}></Link>
-                <BsGearFill className='ml-3 cursor-pointer' onClick={() => setSettingsVisible(true)} />
+                <div onClick={() => ctx.user != null ? setSettingsVisible(true) : setLoginModalVisible(true)} className={`cursor-pointer text-white rounded-full bg-gray-500 h-10 self-center ml-4 ${ctx.loggedIn && "overflow-hidden w-10"} flex justify-center items-center`}>
+                    {ctx.user != null ? 
+                        <p className='m-2'>{formatName(ctx.user.email)}</p> :
+                        <p className="cursor-pointer mx-3" >🔑 Login</p>
+                    }
+                </div>
             </div>
             <SettingsModal visible={settingsVisible} setVisible={setSettingsVisible} />
+            <LoginModal visible={loginModalVisible} setVisible={setLoginModalVisible} />
         </header>
     )
 }

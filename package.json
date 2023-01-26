@@ -8,19 +8,22 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@azure/communication-email": "^1.0.0-beta.1",
+    "@passwordless-id/webauthn": "^1.2.0",
     "git-revision-webpack-plugin": "^5.0.0",
-    "mongoose": "^6.4.6",
-    "next": "12.0.4",
+    "mongoose": "^6.9.0",
+    "next": "^13.1.5",
     "node-cache": "^5.1.2",
     "node-ical": "^0.14.1",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-icons": "^4.3.1"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.3.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.0",
     "eslint": "7.32.0",
-    "eslint-config-next": "12.0.4",
+    "eslint-config-next": "^13.1.5",
     "postcss": "^8.4.4",
     "tailwindcss": "^2.2.19"
   }
