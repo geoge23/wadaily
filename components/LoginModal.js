@@ -1,39 +1,56 @@
 import { useContext, useState } from "react";
+import AddDetailsModal from "./AddDetailsModal";
 import CloseButton from "./CloseButton";
+import Loader from "./Loader";
 import Modal from "./Modal";
 import { PreferencesContext } from "./PreferencesContext";
 
 export default function LoginModal({visible, setVisible}) {
     const ctx = useContext(PreferencesContext);
+    const [needDetails, setNeedDetails] = useState(false)
     const [number, setNumber] = useState("xxxxxx");
-    const [needDetails, setNeedDetails] = useState(true);
+    const [loading, setLoading] = useState(false)
+
+    const loginUser = async () => {
+        setLoading(true)
+        const res = await fetch(`/api/user/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({id: number})
+        })
+        const body = await res.json()
+
+        ctx.updatePreferences(body.preferences)
+        delete body.preferences
+        ctx.setUser(body)
+        if (body.missingDetails) {
+            setNeedDetails(true)
+        } else {
+            setVisible(false)
+        }
+
+        setLoading(false)
+    }
 
     return (visible && <Modal style={{minWidth: '30%'}}>
             <CloseButton onClick={() => setVisible(false)}></CloseButton>
+            {loading && <Loader />}
             <p className="text-2xl">Sign in</p>
             <p className="text-gray-500">Sign in with your student ID to save your preferences</p>
-            <div class="flex mt-2 items-center justify-center w-full">
+            <div className="flex mt-2 items-center justify-center w-full">
                 {
                     [...Array(6).keys()].map((_, i) => {
                         return <NumberBoxInput key={i} index={i} state={number} setState={setNumber} />
                     })
                 }
             </div>
-            <button id="login-submit" className="mt-2">Log in</button>
-            {needDetails && <Modal>
-                <p className="text-2xl">Set up</p>
-                <p className="mb-3">We&apos;ll need some extra details to register you</p>
-                <p>Your Name</p>
-                <input type="text" className="w-full border-2 mb-2 border-gray-300 rounded-md p-2" />
-                <p>Your Woodward Email</p>
-                <div className="flex items-center border-2 rounded-md border-gray-300">
-                    <input type="text" className="0 p-2 w-max outline-none" />
-                    <p className="mx-3">@woodward.edu</p>
-                </div>
-                <button id="login-submit" className="mt-3">Complete setup</button>
-            </Modal>}
+            <button id="login-submit" onClick={loginUser} className="mt-2">Log in</button>
+            <AddDetailsModal visible={needDetails} setVisible={setNeedDetails} setLoginModal={setVisible} />
         </Modal>)
 }
+
 
 // input to take one number and then move to the next one
 function NumberBoxInput({index, state, setState}) {
@@ -55,7 +72,7 @@ function NumberBoxInput({index, state, setState}) {
                         document.getElementById('login-submit').focus()
                     }
                 }
-            }} type="number" maxLength={1} className="text-2xl tab-target mr-2 text-center number-input w-14 h-14 border-2 border-gray-300 rounded-md p-2" />
+            }} type="number" maxLength={1} className="text-2xl tab-target mr-2 text-center number-input w-14 h-14 border-2 border-gray-300 rounded-md p-2 dark:bg-gray-900" />
         </div>
     )
 }

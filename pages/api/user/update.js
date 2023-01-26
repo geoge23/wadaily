@@ -1,8 +1,8 @@
-import { User } from '../../../functions/mongo'
+import { Users } from '../../../functions/mongo'
 
 export default async function update(req, res) {
     const { name, email, id } = req.body
-    const user = await User.findOne({studentId: id})
+    const user = await Users.findOne({studentId: id})
     if (name) user.name = name;
     if (email) user.email = email;
     await user.save()

@@ -29,7 +29,6 @@ export default function Home(props) {
   const [loading, setLoading] = useState(false);
   const [date, setDate] = useState(props.date);
   const [selectedCafeteria, setSelectedCafeteria] = useState("Cafeteria");
-  const [loginModalVisible, setLoginModalVisible] = useState(true);
   const router = useRouter()
 
   const ctx = useContext(PreferencesContext);
@@ -105,7 +104,6 @@ export default function Home(props) {
   return (
     <div className="main-page">
       {loading && <Loader />}
-      <LoginModal visible={loginModalVisible} setVisible={setLoginModalVisible} />
       <Head>
         <title>WADaily</title>
         <meta name="description" content="View your schedule, menu, and announcements for Woodward Academy quicky and efficiently!"></meta>

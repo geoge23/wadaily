@@ -88,17 +88,51 @@ const Announcements = mongoose.models.announcements || mongoose.model('announcem
 
 const UserSchema = new mongoose.Schema({
     name: String,
-    email: String,
-    studentId: String,
-    meta: Object
+    email: {
+        type: String,
+        unique: true
+    },
+    studentId: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    preferences: {
+        type: Object,
+        required: true,
+        default: {}
+    },
+    credentials: {
+        type: Object,
+        required: true,
+        default: {}
+    },
+}, {minimize: false})
+
+const Users = mongoose.models.users || mongoose.model('users', UserSchema)
+
+const ChallengeSchema = new mongoose.Schema({
+    studentId: {
+        type: String,
+        required: true
+    },
+    challenge: {
+        type: String,
+        required: true
+    },
+    date: {
+        type: Date,
+        required: true
+    },
 })
 
-const Users = mongoose.models.announcements || mongoose.model('users', UserSchema)
+const Challenges = mongoose.models.challenges || mongoose.model('challenges', ChallengeSchema)
 
 export {
     Days,
     Schedules,
     Notifications,
     Announcements,
-    Users
+    Users,
+    Challenges
 };

@@ -1,4 +1,6 @@
 import { createContext, useState } from "react";
+import AddDetailsModal from "./AddDetailsModal";
+import Loader from "./Loader";
 
 //a react component that creates a context for the preferences
 export const PreferencesContext = createContext({});
@@ -25,12 +27,8 @@ export function PreferencesContextComponent({children}) {
         }
     }
 
-    function loginUser(id) {
-
-    }
-
     return (
-        <PreferencesContext.Provider value={{preferences, updatePreferences, user, loginUser}}>
+        <PreferencesContext.Provider value={{preferences, updatePreferences, user, setUser}}>
             {children}
         </PreferencesContext.Provider>
     )
