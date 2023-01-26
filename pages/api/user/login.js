@@ -48,6 +48,13 @@ export default async function login(req, res) {
             }
         } else {
             if (data && data.name && data.email) {
+                if (/[0-9]{2}[a-zA-Z]{1,20}\@woodward\.edu/.test(data.email) == false && /[a-zA-Z]{1,20}\.[a-zA-Z]{1,20}\@woodward\.edu/.test(data.email) == false) {
+                    return res.status(400).send({ status: "invalid_data", message: "Your email is invalid" })
+                }
+                data.email = data.email.toLowerCase()
+                if (data.name.length > 30) {
+                    return res.status(400).send({ status: "invalid_data", message: "Your name is invalid" })
+                }
                 const user = new Users({
                     name: data.name,
                     email: data.email,
@@ -83,6 +90,7 @@ export default async function login(req, res) {
         }
 
         res.status(500).send({ status: "internal_error", message: "An internal error has occurred" })
+        throw e
     }
 }
 

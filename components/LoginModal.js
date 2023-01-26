@@ -87,7 +87,7 @@ export default function LoginModal({visible, setVisible}) {
                         id: number,
                         code: verifyCode
                     })
-                }} className="mt-2 bg-blue-600 text-white p-1 rounded-md">Submit</button>
+                }} className="my-2 bg-blue-600 text-white p-1 rounded-md">Submit</button>
                 <button onClick={() => {
                     setVerifyRequest(null)
                     setVerifyCode("xxxxxx")
@@ -128,16 +128,9 @@ function NumberBoxInput({index, state, setState, autoPaste = false}) {
                 event.preventDefault()
                 console.log('ding')
                 const paste = (event.clipboardData || window.clipboardData).getData('text');
-                setState(paste)
-            }}
-            onClick={async (event) => {
-                if (!autoPaste) return
-                try {
-                    const text = await navigator.clipboard.readText()
-                    if (/[0-9]{6}/.test(text)) {
-                        setState(text)
-                    }
-                } catch (_) {}
+                if (/[0-9]{6}/.test(paste)) {
+                    setState(paste)
+                }
             }}
             type="number" value={state[index] == "x" ? "" : state[index]} className="text-2xl tab-target mr-2 text-center number-input w-14 h-14 border-2 border-gray-300 rounded-md p-2 dark:bg-gray-900" />
         </div>
