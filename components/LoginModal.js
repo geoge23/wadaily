@@ -46,7 +46,8 @@ export default function LoginModal({visible, setVisible}) {
             setVerifyRequest("Get your login code from your email")
         } else {
             setLoading(false)
-            return alert(res.status)
+            setVerifyCode("xxxxxx")
+            return alert(body.message)
         }
         setLoading(false)
     }
@@ -56,7 +57,7 @@ export default function LoginModal({visible, setVisible}) {
             {loading && <Loader />}
             <p className="text-2xl">Sign in</p>
             <p className="text-gray-500">Sign in with your student ID to save your preferences</p>
-            <div className="flex mt-2 items-center justify-center w-full">
+            <div className="flex mt-2 items-center justify-center w-full mb-2">
                 {
                     [...Array(6).keys()].map((_, i) => {
                         return <NumberBoxInput key={i} index={i} state={number} setState={setNumber} />
@@ -68,12 +69,12 @@ export default function LoginModal({visible, setVisible}) {
                     id: number,
                     code: verifyCode.indexOf('x') == -1 ? verifyCode : undefined
                 })
-            }} className="mt-2">Log in</button>
+            }} className="mt-2 bg-blue-600 text-white p-1 rounded-md">Log in</button>
             <AddDetailsModal visible={needDetails} setVisible={setNeedDetails} loginUser={loginUser} number={number} />
             {verifyRequest && <Modal>
                 <p className="text-2xl">Verification required</p>
                 <p>{verifyRequest}</p>
-                <div className="flex mt-2 items-center justify-center w-full">
+                <div className="flex mt-2 items-center justify-center w-full mb-2">
                     {
                         [...Array(6).keys()].map((_, i) => {
                             return <NumberBoxInput key={i} index={i} state={verifyCode} setState={setVerifyCode} autoPaste={true} />
@@ -86,7 +87,11 @@ export default function LoginModal({visible, setVisible}) {
                         id: number,
                         code: verifyCode
                     })
-                }} className="mt-2">Submit</button>
+                }} className="mt-2 bg-blue-600 text-white p-1 rounded-md">Submit</button>
+                <button onClick={() => {
+                    setVerifyRequest(null)
+                    setVerifyCode("xxxxxx")
+                }}>Cancel</button>
             </Modal>}
         </Modal>)
 }
