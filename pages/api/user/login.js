@@ -46,7 +46,7 @@ export default async function login(req, res) {
                         await user.save()
                     }
                     //make a cross-site cookie
-                    res.setHeader('Set-Cookie', `token=${generateHmacCookie(id)}; Path=/; SameSite=None; Secure; Domain=${(new URL(req.headers.origin)).hostname}}`)
+                    res.setHeader('Set-Cookie', `token=${generateHmacCookie(id)}; Path=/; SameSite=None; Secure; Domain=${(new URL(req.headers.origin)).hostname}`)
                     res.status(200).send({ user, token: generateHmacCookie(id) })
                 } else {
                     res.status(401).send({ status: "invalid_code", message: "The code you entered is invalid" })
