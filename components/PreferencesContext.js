@@ -16,7 +16,7 @@ export function PreferencesContextComponent({children}) {
     
     useEffect(() => {
         pullUser()
-    }, [user])
+    }, [])
     
     function updatePreferences(newPreferences, fromServer = false) {
         setPreferences({...preferences, ...newPreferences})
