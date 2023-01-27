@@ -4,11 +4,15 @@ import { generateHmacCookie, validateHmacString, getIdFromHmac } from '../../../
 
 export default async function login(req, res) {
     try {
-        const { id, code, data, token } = req.body
+        let { id, code, data, token } = req.body
+        if (!token) {
+            token = req.cookies.token
+        }
         if (token && validateHmacString(token)) {
             const id = getIdFromHmac(token)
             const tokenUser = await Users.findOne({ studentId: id })
             if (tokenUser) {
+                res.setHeader('Set-Cookie', `token=${generateHmacCookie(id)}; Path=/; SameSite=None; Secure; Domain=${(new URL(req.headers.origin)).hostname}`)
                 return res.status(200).send({ user: tokenUser })
             }
         }
@@ -41,6 +45,8 @@ export default async function login(req, res) {
                         user.emailVerified = true
                         await user.save()
                     }
+                    //make a cross-site cookie
+                    res.setHeader('Set-Cookie', `token=${generateHmacCookie(id)}; Path=/; SameSite=None; Secure; Domain=${(new URL(req.headers.origin)).hostname}}`)
                     res.status(200).send({ user, token: generateHmacCookie(id) })
                 } else {
                     res.status(401).send({ status: "invalid_code", message: "The code you entered is invalid" })
@@ -48,7 +54,7 @@ export default async function login(req, res) {
             }
         } else {
             if (data && data.name && data.email) {
-                if (/[0-9]{2}[a-zA-Z]{1,20}\@woodward\.edu/.test(data.email) == false && /[a-zA-Z]{1,20}\.[a-zA-Z]{1,20}\@woodward\.edu/.test(data.email) == false) {
+                if (/^[0-9]{2}[a-zA-Z]{1,20}\@woodward\.edu$/.test(data.email) == false && /^[a-zA-Z]{1,20}\.[a-zA-Z]{1,20}\@woodward\.edu$/.test(data.email) == false) {
                     return res.status(400).send({ status: "invalid_data", message: "Your email is invalid" })
                 }
                 data.email = data.email.toLowerCase()
