@@ -12,7 +12,7 @@ export function PreferencesContextComponent({children}) {
         classNames: {}
     })
 
-    const [user, setUser] = useState(null)
+    const [userDoc, setUserDoc] = useState(null)
     
     useEffect(() => {
         pullUser()
@@ -53,15 +53,20 @@ export function PreferencesContextComponent({children}) {
 
             if (userReq.status == 200) {
                 const body = await userReq.json()
-                setUser(body.user)
+                setUserDoc(body.user)
                 updatePreferences(body.user.preferences, true)
             }
         }
     }
+
+    function setUser(doc) {
+        setUserDoc(doc)
+        updatePreferences(doc.preferences, true)
+    }
             
 
     return (
-        <PreferencesContext.Provider value={{preferences, updatePreferences, user, setUser}}>
+        <PreferencesContext.Provider value={{preferences, updatePreferences, user: userDoc, setUser}}>
             {children}
         </PreferencesContext.Provider>
     )

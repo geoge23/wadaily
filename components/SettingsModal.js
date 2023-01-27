@@ -39,7 +39,7 @@ export default function SettingsModal({visible, setVisible}) {
                 </Button>
                 <Button text="Log out" buttonText="Log out" onChange={() => {
                     window.localStorage.removeItem('token');
-                    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+                    document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${window.location.hostname};`;
                     window.location.reload();
                 }}>
                     Sign out of your account
