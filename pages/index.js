@@ -61,7 +61,7 @@ export default function Home(props) {
     gtag('event','seek_days', {change: num})
   }
 
-  function handleChangeCafeteria(e, overideDate) {
+  function handleChangeCafeteria(e, overideDate = undefined) {
     setSelectedCafeteria(e)
     const time = parseWaDate(overideDate ?? date)
     const now = `${time.getMonth() + 1}-${time.getDate()}-${time.getFullYear() % 100}`
@@ -89,7 +89,7 @@ export default function Home(props) {
     const {schedule: newSchedule, friendlyName: newFriendlyName, name} = await (await fetch(`/api/schedule?date=${now}`)).json();
     if (name != "NONE") {
       const calendar = await (await fetch(`/api/calendar?date=${now}`)).json();
-      handleChangeCafeteria(selectedCafeteria, time)
+      handleChangeCafeteria(selectedCafeteria, now)
       setCalendarList(calendar);
     }
     setSchedule(newSchedule);
