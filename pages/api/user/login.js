@@ -3,6 +3,11 @@ import emailClient from '../../../functions/mail'
 import { generateHmacCookie, validateHmacString, getIdFromHmac } from '../../../functions/hmac'
 
 export default async function login(req, res) {
+    if (/^http(s)?\:\/\/([a-zA-Z0-9\.]*)?wadaily.co$/i.test(req.headers.origin)) {
+        res.setHeader('Access-Control-Allow-Origin', req.headers.origin)
+        res.setHeader('Access-Control-Allow-Credentials', 'true')
+    }
+
     try {
         let { id, code, data, token } = req.body
         if (!token) {
@@ -18,7 +23,7 @@ export default async function login(req, res) {
         }
         if (!id) res.status(400).send({ status: "missing_id" })
         const user = await Users.findOne({ studentId: id })
-        if (user) {
+        if (user && (user.emailVerified || code)) {
             if (!code) {
                 const code = generateCode()
                 const verify = new Verifys({
@@ -61,12 +66,19 @@ export default async function login(req, res) {
                 if (data.name.length > 30) {
                     return res.status(400).send({ status: "invalid_data", message: "Your name is invalid" })
                 }
-                const user = new Users({
-                    name: data.name,
-                    email: data.email,
-                    studentId: id
-                })
-                await user.save()
+                if (!user) {
+                    const user = new Users({
+                        name: data.name,
+                        email: data.email,
+                        studentId: id
+                    })
+                    await user.save()
+                } else {
+                    user.name = data.name
+                    user.email = data.email
+                    await user.save()
+                    await Verifys.deleteMany({ studentId: id })
+                }
                 const code = generateCode()
                 const verify = new Verifys({
                     studentId: id,

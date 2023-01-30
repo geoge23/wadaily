@@ -60,7 +60,7 @@ export default function LoginModal({visible, setVisible}) {
             <div className="flex mt-2 items-center justify-center w-full mb-2">
                 {
                     [...Array(6).keys()].map((_, i) => {
-                        return <NumberBoxInput key={i} index={i} state={number} setState={setNumber} />
+                        return <NumberBoxInput key={i} index={i} state={number} setState={setNumber} focusOnEnd={"#login-submit"} />
                     })
                 }
             </div>
@@ -77,11 +77,11 @@ export default function LoginModal({visible, setVisible}) {
                 <div className="flex mt-2 items-center justify-center w-full mb-2">
                     {
                         [...Array(6).keys()].map((_, i) => {
-                            return <NumberBoxInput key={i} index={i} state={verifyCode} setState={setVerifyCode} autoPaste={true} />
+                            return <NumberBoxInput key={i} index={i} state={verifyCode} setState={setVerifyCode} focusOnEnd={"#verify-submit"} />
                         })
                     }
                 </div>
-                <button id="login-submit" onClick={() => {
+                <button id="verify-submit" onClick={() => {
                     if (verifyCode.indexOf('x') != -1) return alert("Please enter the verification code")
                     loginUser({
                         id: number,
@@ -98,7 +98,7 @@ export default function LoginModal({visible, setVisible}) {
 
 
 // input to take one number and then move to the next one
-function NumberBoxInput({index, state, setState, autoPaste = false}) {
+function NumberBoxInput({index, state, setState, focusOnEnd}) {
     return (
         <div>
             <input onKeyDown={(event) => {
@@ -117,7 +117,9 @@ function NumberBoxInput({index, state, setState, autoPaste = false}) {
                     try {
                         event.target.parentElement.nextElementSibling.children[0].focus()
                     } catch (_) {
-                        document.getElementById('login-submit').focus()
+                        if (focusOnEnd) {
+                            document.querySelector(focusOnEnd).focus()
+                        }
                     }
                 }
             }} 
