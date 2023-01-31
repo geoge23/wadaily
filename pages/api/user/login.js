@@ -3,9 +3,17 @@ import emailClient from '../../../functions/mail'
 import { generateHmacCookie, validateHmacString, getIdFromHmac } from '../../../functions/hmac'
 
 export default async function login(req, res) {
-    if (/^http(s)?\:\/\/([a-zA-Z0-9\.]*)?wadaily.co$/i.test(req.headers.origin)) {
+    if (/^http(s)?\:\/\/([a-zA-Z0-9\.]*)?wadaily.co(:[0-9]{1,5})?$/i.test(req.headers.origin)) {
         res.setHeader('Access-Control-Allow-Origin', req.headers.origin)
         res.setHeader('Access-Control-Allow-Credentials', 'true')
+    }
+
+    if (req.method == 'OPTIONS') {
+        res.setHeader('Access-Control-Allow-Methods', 'POST')
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+        res.status(200).send()
+    } else if (req.method != 'POST') {
+        return res.status(405).send({ status: "invalid_method" })
     }
 
     try {
