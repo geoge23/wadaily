@@ -11,7 +11,7 @@ export default async function login(req, res) {
     if (req.method == 'OPTIONS') {
         res.setHeader('Access-Control-Allow-Methods', 'POST')
         res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
-        res.status(200).send()
+        return res.status(200).send()
     } else if (req.method != 'POST') {
         return res.status(405).send({ status: "invalid_method" })
     }
