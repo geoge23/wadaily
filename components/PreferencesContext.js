@@ -60,6 +60,9 @@ export function PreferencesContextComponent({children}) {
     }
 
     function setUser(doc) {
+        gtag('config', 'G-18065K9X6D', {
+            'user_id': doc._id
+        })
         setUserDoc(doc)
         updatePreferences(doc.preferences, true)
     }
