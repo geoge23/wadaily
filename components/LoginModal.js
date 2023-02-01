@@ -66,7 +66,7 @@ export default function LoginModal({visible, setVisible}) {
             </div>
             <button id="login-submit" onClick={() => {
                 loginUser({
-                    id: number,
+                    id: number.indexOf('x') == -1 ? number : undefined,
                     code: verifyCode.indexOf('x') == -1 ? verifyCode : undefined
                 })
             }} className="mt-2 bg-blue-600 text-white p-1 rounded-md">Log in</button>
@@ -84,8 +84,8 @@ export default function LoginModal({visible, setVisible}) {
                 <button id="verify-submit" onClick={() => {
                     if (verifyCode.indexOf('x') != -1) return alert("Please enter the verification code")
                     loginUser({
-                        id: number,
-                        code: verifyCode
+                        id: number.indexOf('x') == -1 ? number : undefined,
+                        code: verifyCode.indexOf('x') == -1 ? verifyCode : undefined
                     })
                 }} className="my-2 bg-blue-600 text-white p-1 rounded-md">Submit</button>
                 <button onClick={() => {
