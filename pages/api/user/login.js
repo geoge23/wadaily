@@ -46,7 +46,7 @@ export default async function login(req, res) {
         //if they have an account, and they're either verified or supplying a verification code, log them in
         if (user && (user.emailVerified || code)) {
 
-            //if they're not providing a code, they must me unverified, so send them a verification email
+            //if they're not providing a code, they must be unverified, so send them a verification email
             //this email differs from the initial sign up emain only in the text, the values are interchangeable
             if (!code) {
                 const code = generateCode()
@@ -145,7 +145,33 @@ export default async function login(req, res) {
         // catch e11000 error
         // this is a duplicate key error, which means the user already exists
         if (e.code === 11000) {
-            return res.status(400).send({ status: "duplicate", message: "Your ID or email already exists!" })
+            //if the duplicate key is the email, and the email is unverified, we can merge the accounts
+            if (e.keyPattern.email) {
+                const { id, data } = req.body
+                const conflictingUser = await Users.findOne({ email: data.email })
+                if (conflictingUser && !conflictingUser.emailVerified) {
+                    conflictingUser.studentId = id
+                    await conflictingUser.save()
+                    const code = generateCode()
+                    const verify = new Verifys({
+                        studentId: id,
+                        challenge: code
+                    })
+                    await verify.save()
+                    const email = generateEmail(
+                        "Verify your email",
+                        conflictingUser.email,
+                        conflictingUser.name,
+                        "Your verification code is " + code,
+                        `<h1>WADaily Accounts Service</h1>
+                        <h3>Your verification code is ${code}</h3>
+                        <p>Copy and paste this code into the app to verify your email.</p>`
+                    )
+                    await emailClient.send(email)
+                    return res.status(401).send({ status: "needs_verification" })
+                }
+            }
+            return res.status(400).send({ status: "duplicate", message: "Your ID or email already exists! Contact 23gparks@woodward.edu if this is an error" })
         }
 
         //if there's an internal error, send a generic error message
