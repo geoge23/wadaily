@@ -41,7 +41,7 @@ export default async function login(req, res) {
         if (!id) res.status(400).send({ status: "missing_id" })
 
         //if they have an id, check if they have an account
-        const user = await Users.findOne({ studentId: id })
+        let user = await Users.findOne({ studentId: id })
 
         //if they have an account, and they're either verified or supplying a verification code, log them in
         if (user && (user.emailVerified || code)) {
@@ -104,7 +104,7 @@ export default async function login(req, res) {
                 //check if the user already exists
                 if (!user) {
                     //if they don't, create them
-                    const user = new Users({
+                    user = new Users({
                         name: data.name,
                         email: data.email,
                         studentId: id
