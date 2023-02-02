@@ -1,8 +1,11 @@
-import { Users } from '../../../functions/mongo'
+import dbConnect, { Users } from '../../../functions/mongo'
 import { validateHmacString, getIdFromHmac } from '../../../functions/hmac'
 
 
 export default async function config(req, res) {
+    //ensure connected to db
+    await dbConnect()
+
     const { preferences } = req.body
     const { authorization } = req.headers
     const token = authorization.split(" ")[1]

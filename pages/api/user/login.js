@@ -1,8 +1,11 @@
-import { Users, Verifys } from '../../../functions/mongo'
+import dbConnect, { Users, Verifys } from '../../../functions/mongo'
 import emailClient from '../../../functions/mail'
 import { generateHmacCookie, validateHmacString, getIdFromHmac } from '../../../functions/hmac'
 
 export default async function login(req, res) {
+    //ensure connected to db
+    await dbConnect()
+
     //if the origin is from a subdomain of wadaily.co, allow cross-site requests and the sharing of cookie credentials
     //this regex matches any subdomain of wadaily.co, including wadaily.co itself, and any port
     if (/^http(s)?\:\/\/([a-zA-Z0-9\.]*)?wadaily.co(:[0-9]{1,5})?$/i.test(req.headers.origin)) {
@@ -38,7 +41,7 @@ export default async function login(req, res) {
         }
 
         //if they don't have a token and they don't have an id, they need to enter their id
-        if (!id) res.status(400).send({ status: "missing_id" })
+        if (!id) return res.status(400).send({ status: "missing_id" })
 
         //if they have an id, check if they have an account
         let user = await Users.findOne({ studentId: id })
@@ -65,7 +68,7 @@ export default async function login(req, res) {
                     <p>Copy and paste this code into the app to login.</p>`
                 )
                 await emailClient.send(email)
-                res.status(401).send({ status: "needs_code" })
+                return res.status(401).send({ status: "needs_code" })
             } else {
                 //if they are providing a code, check if it's valid
                 //more specifically, grab the most recent code for this user and check if it matches
@@ -81,10 +84,10 @@ export default async function login(req, res) {
                     //make a cross-site cookie
                     res.setHeader('Set-Cookie', `token=${generateHmacCookie(id)}; Path=/; SameSite=None; Secure; Domain=${(new URL(req.headers.origin)).hostname}`)
                     //send the user along with a login token
-                    res.status(200).send({ user, token: generateHmacCookie(id) })
+                    return res.status(200).send({ user, token: generateHmacCookie(id) })
                 } else {
                     //if the code is invalid, send an error
-                    res.status(401).send({ status: "invalid_code", message: "The code you entered is invalid" })
+                    return res.status(401).send({ status: "invalid_code", message: "The code you entered is invalid" })
                 }
             }
         } else {
@@ -134,11 +137,11 @@ export default async function login(req, res) {
                     <p>Copy and paste this code into the app to verify your email.</p>`
                 )
                 await emailClient.send(email)
-                res.status(401).send({ user, status: "needs_verification" })
+                return res.status(401).send({ user, status: "needs_verification" })
 
             } else {
                 //if they're not providing data, they need to provide data to sign up
-                res.status(400).send({ status: 'missing_data' })
+                return res.status(400).send({ status: 'missing_data' })
             }
         }
     } catch (e) {
@@ -175,8 +178,8 @@ export default async function login(req, res) {
         }
 
         //if there's an internal error, send a generic error message
-        res.status(500).send({ status: "internal_error", message: "An internal error has occurred" })
-        throw e
+        console.warn(`${(new Date()).toISOString()} Error in /api/login:\n`, e)
+        return res.status(500).send({ status: "internal_error", message: "An internal error has occurred" })
     }
 }
 
