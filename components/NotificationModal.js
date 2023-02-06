@@ -17,7 +17,7 @@ export default function NotificationModal() {
             .then(x => {
                 const seen = JSON.parse(window.localStorage.getItem('seen-announcements')) || []
                 const e = x.filter(z => {
-                    return !seen.includes(z._id)
+                    return !seen.includes(z._id) || z.sticky
                 })
                 if (e.length !== 0) {
                     setNotifications(x)
