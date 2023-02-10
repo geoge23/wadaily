@@ -46,7 +46,7 @@ export default function SettingsModal({visible, setVisible}) {
                 </Button>
                 <p className="mt-4">From the WADaily Team ☕</p>
                 <p className="opacity-70">But mostly George</p>
-                <p className="opacity-70">Version {VERSION} from {LASTCOMMITDATETIME}</p>
+                <p className="opacity-70">Version {VERSION} from {LAST_COMMIT_DATE_TIME}</p>
             </div>
         </Modal>)
 }

@@ -24,9 +24,10 @@ module.exports = {
     config.plugins.push(gitRevisionPlugin)
     config.plugins.push(new webpack.DefinePlugin({
       VERSION: JSON.stringify(gitRevisionPlugin.version()),
-      COMMITHASH: JSON.stringify(gitRevisionPlugin.commithash()),
+      COMMIT_HASH: JSON.stringify(gitRevisionPlugin.commithash()),
       BRANCH: JSON.stringify(gitRevisionPlugin.branch()),
-      LASTCOMMITDATETIME: JSON.stringify(gitRevisionPlugin.lastcommitdatetime()),
+      LAST_COMMIT_DATE_TIME: JSON.stringify(gitRevisionPlugin.lastcommitdatetime()),
+      COPYRIGHT_YEAR: (new Date()).getFullYear()
     }))
     return config
   },
