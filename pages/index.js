@@ -62,9 +62,9 @@ export default function Home(props) {
     gtag('event','seek_days', {change: num})
   }
 
-  function handleChangeCafeteria(e, overideDate = undefined) {
+  function handleChangeCafeteria(e, overrideDate = undefined) {
     setSelectedCafeteria(e)
-    const time = parseWaDate(overideDate ?? date)
+    const time = parseWaDate(overrideDate ?? date)
     const now = `${time.getMonth() + 1}-${time.getDate()}-${time.getFullYear() % 100}`
     switch (e) {
       case "Cafeteria":
