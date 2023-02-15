@@ -104,7 +104,6 @@ export default function Home(props) {
       {loading && <Loader />}
       <Head>
         <title>WADaily</title>
-        <meta name="description" content="View your schedule, menu, and announcements for Woodward Academy quicky and efficiently!"></meta>
       </Head>
 
       <Header />
