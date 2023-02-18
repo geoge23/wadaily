@@ -41,11 +41,3 @@ jobs:
           secrets: |
             "MONGO_URI=${{ secrets.MONGO_URI }}"
             "WEATHER_KEY=${{ secrets.WEATHER_KEY }}"
-  trigger-recreate-container:
-    runs-on: ubuntu-latest
-    needs: build-and-push-image
-    steps:
-      - name: Workflow Webhook Action
-        uses: distributhor/workflow-webhook@v3.0.1
-        env:
-          webhook_url: ${{ secrets.AUTO_REBUILD_URI }}
