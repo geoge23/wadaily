@@ -84,4 +84,13 @@ a {
   border-radius: 10px;
 }
 
+@keyframes animate-text-bg {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
+
 
