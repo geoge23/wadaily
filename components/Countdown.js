@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react"
 
 export default function Countdown({ endDate, title, completeMessage }) {
-    const [timeLeft, setTimeLeft] = useState({
-        days: 0,
-        hours: 0,
-        mins: 0,
-        secs: 0
-    })
+    const [timeLeft, setTimeLeft] = useState(null)
     const [timeElapsed, setTimeElapsed] = useState(false)
 
     useEffect(() => {
@@ -30,6 +25,7 @@ export default function Countdown({ endDate, title, completeMessage }) {
         return () => clearInterval(interval)
     })
 
+    if (!timeLeft) return undefined
     return <div className="flex flex-col items-end">
         {timeElapsed ? <>
             <p className="text-2xl font-semibold text-white">{completeMessage}</p>
