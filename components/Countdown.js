@@ -28,14 +28,14 @@ export default function Countdown({ endDate, title, completeMessage }) {
     if (!timeLeft) return undefined
     return <div className="flex flex-col items-end">
         {timeElapsed ? <>
-            <p className="text-2xl font-semibold text-white">{completeMessage}</p>
+            <p className="md:text-2xl text-lg font-semibold text-white">{completeMessage}</p>
         </> : <>
-            <p className="text-white text-lg font-light tracking-wider">{title}</p>
+            <p className="text-white md:text-lg text-sm font-light tracking-wider">{title}</p>
             <div className="flex">
                 {Object.entries(timeLeft).map(([key, value]) => {
-                    return <div key={key} className="w-12 flex flex-col items-center text-white">
-                        <div className="text-3xl font-bold">{value}</div>
-                        <div className="text-sm">{key}</div>
+                    return <div key={key} className="md:w-12 w-10 flex flex-col items-center text-white">
+                        <div className="md:text-3xl text-xl font-bold">{value}</div>
+                        <div className="md:text-sm text-xs">{key}</div>
                     </div>
                 })}
             </div>

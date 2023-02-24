@@ -9,11 +9,11 @@ export default function Hero({day, isDifferentDay = false, widescreen = false, t
     const ctx = useContext(PreferencesContext)
 
     return (<div name="home" className={`
-        md:justify-between justify-end box-border
-        md:items-end shadow-lg flex bg-gradient-to-r 
+        justify-between box-border
+        items-end shadow-lg flex bg-gradient-to-r 
         dark-bg-none dark:bg-gray-500
-        w-full md:flex-row flex-col relative overflow-hidden
-        ${widescreen ? "w-screen z-50 left-0 top-0 h-52 py-7 px-20 sticky": "rounded-2xl h-60 py-5 px-6"}
+        w-full relative overflow-hidden
+        ${widescreen ? "w-screen z-50 left-0 top-0 h-52 py-7 px-20 sticky": "rounded-2xl h-56 py-5 px-6"}
         ${false ? "from-blue-200 to-blue-500" : "from-yellow-400 via-red-500 to-pink-500" }
     `} ref={ref}>
         <div className="z-10">
@@ -28,7 +28,7 @@ export default function Hero({day, isDifferentDay = false, widescreen = false, t
         </div>
         {widescreen ? <div className={"md:mt-0 mt-2"}>
             <WidescreenDateText></WidescreenDateText>
-        </div> : <div className={"md:mt-0 mt-2 text-right"}>
+        </div> : <div className={"md:mt-0 mt-2 md:text-right"}>
             <Countdown 
                 endDate={new Date("2023-04-25T15:15:00+0000")} 
                 title="Seniors' Last Day"
