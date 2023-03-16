@@ -8,7 +8,7 @@ export default async function getMenuList(date, cafe = "upper-school") {
     days = foodCache.get(`${formattedDate}-${cafe}`);
     if (days == undefined) {
         try {
-            const food = await fetch(`https://woodward.nutrislice.com/menu/api/weeks/school/${cafe}/menu-type/lunch/${Now.getFullYear()}/${Now.getMonth() + 1}/${Now.getDate()}`)
+            const food = await fetch(`https://woodward.api.nutrislice.com/menu/api/weeks/school/${cafe}/menu-type/lunch/${Now.getFullYear()}/${Now.getMonth() + 1}/${Now.getDate()}`)
             days = (await food.json()).days;
             foodCache.set(`${formattedDate}-${cafe}`, days, 6000)
         } catch (_) {
