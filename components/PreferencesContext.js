@@ -13,6 +13,7 @@ export function PreferencesContextComponent({children}) {
     })
 
     const [userDoc, setUserDoc] = useState(null)
+    const [loadingUser, setLoadingUser] = useState(true)
     
     useEffect(() => {
         pullUser()
@@ -40,6 +41,7 @@ export function PreferencesContextComponent({children}) {
     }
 
     async function pullUser() {
+        setLoadingUser(true)
         if (window.localStorage.getItem("token")) {
             const userReq = await fetch("/api/user/login", {
                 headers: {
@@ -57,6 +59,7 @@ export function PreferencesContextComponent({children}) {
                 updatePreferences(body.user.preferences, true)
             }
         }
+        setLoadingUser(false)
     }
 
     function setUser(doc) {
@@ -69,7 +72,7 @@ export function PreferencesContextComponent({children}) {
             
 
     return (
-        <PreferencesContext.Provider value={{preferences, updatePreferences, user: userDoc, setUser}}>
+        <PreferencesContext.Provider value={{preferences, updatePreferences, user: userDoc, setUser, loadingUser}}>
             {children}
         </PreferencesContext.Provider>
     )

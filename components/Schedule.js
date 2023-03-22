@@ -56,6 +56,19 @@ function ScheduleItem(props) {
         }
     }, [props.time, props.startTime, props.endTime, props.isDifferentDay, ctx.preferences.showProgressAcrossDays]);
 
+    if (ctx.loadingUser) {
+        return <div className={"flex items-center animate-pulse"}>
+            <svg height="80" width="25" className="wadaily-line">
+                {props.number != 0 && <line x1="12.5" y1="0" x2="12.5" y2="40" style={{stroke: "#6b7280", strokeWidth: 3}}></line> }
+                {props.number != props.length && <line x1="12.5" y1="40" x2="12.5" y2="80" style={{stroke: "#6b7280", strokeWidth: 3}}></line> }
+                <circle cx="12.5" cy="40" r="6" fill="#6b7280"></circle>
+            </svg>
+            <div>
+                <div className={"h-7 font-medium bg-gray-200 w-44 rounded"}></div>
+                <div className="h-5 bg-gray-200 w-32 rounded mt-1"></div>
+            </div>
+        </div>
+    }
     return (<div className={"flex items-center"}>
         <svg height="80" width="25" className="wadaily-line">
             {props.number != 0 ? <line x1="12.5" y1="0" x2="12.5" y2="40" style={{stroke: betweenTime[0], strokeWidth: 3}}></line> : null}
