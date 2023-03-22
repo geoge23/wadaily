@@ -5,10 +5,10 @@ export default function Countdown({ endDate, title, completeMessage }) {
     const [timeElapsed, setTimeElapsed] = useState(false)
 
     useEffect(() => {
-        const interval = setInterval(() => {
+        function calculateTimeElapsed() {
             const now = new Date()
             const difference = endDate - now
-
+    
             if (difference > 0) {
                 setTimeLeft({
                     days: Math.floor(difference / (1000 * 60 * 60 * 24)),
@@ -20,10 +20,13 @@ export default function Countdown({ endDate, title, completeMessage }) {
                 setTimeElapsed(true)
                 clearInterval(interval)
             }
-        }, 1000)
-
+        }
+        
+        calculateTimeElapsed()
+        const interval = setInterval(calculateTimeElapsed, 1000)
+        
         return () => clearInterval(interval)
-    })
+    }, [endDate])
 
     if (!timeLeft) return undefined
     return <div className="flex flex-col items-end">

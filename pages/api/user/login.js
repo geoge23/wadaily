@@ -50,7 +50,7 @@ export default async function login(req, res) {
         if (user && (user.emailVerified || code)) {
 
             //if they're not providing a code, they must be unverified, so send them a verification email
-            //this email differs from the initial sign up emain only in the text, the values are interchangeable
+            //this email differs from the initial sign up email only in the text, the values are interchangeable
             if (!code) {
                 const code = generateCode()
                 const verify = new Verifys({
