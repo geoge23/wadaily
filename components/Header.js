@@ -32,7 +32,7 @@ export default function Header() {
                 <Link func={() => {document.getElementById('header').scrollIntoView()}} text={"Today"}></Link>
                 <Link func={() => {document.getElementById('lunch').scrollIntoView()}} text={"Food"}></Link>
                 <Link func={() => {document.getElementById('schedule').scrollIntoView()}} text={"Events"}></Link>
-                <div onClick={() => ctx.user != null ? setSettingsVisible(true) : setLoginModalVisible(true)} className={`cursor-pointer text-white rounded-full bg-gray-500 h-10 self-center ml-4 ${ctx.loggedIn && "overflow-hidden w-10"} flex justify-center items-center`}>
+                <div onClick={() => ctx.user != null ? setSettingsVisible(true) : setLoginModalVisible(true)} className={`cursor-pointer text-white rounded-full bg-gray-500 h-10 self-center ml-4 ${ctx.loadingUser && "animate-pulse"} ${ctx.loggedIn && "overflow-hidden w-10"} flex justify-center items-center`}>
                     {ctx.user != null ? 
                         <p className='m-2'>{formatName(ctx.user.email)}</p> :
                         <p className="cursor-pointer mx-3" >🔑 Login</p>
