@@ -64,8 +64,8 @@ function ScheduleItem(props) {
                 <circle cx="12.5" cy="40" r="6" fill="#6b7280"></circle>
             </svg>
             <div>
-                <div className={"h-7 font-medium bg-gray-200 w-44 rounded"}></div>
-                <div className="h-5 bg-gray-200 w-32 rounded mt-1"></div>
+                <div className={"h-7 font-medium bg-gray-200 dark:bg-gray-500 w-44 rounded"}></div>
+                <div className="h-5 bg-gray-200 dark:bg-gray-500 w-32 rounded mt-1"></div>
             </div>
         </div>
     }
