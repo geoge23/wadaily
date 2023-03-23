@@ -19,7 +19,7 @@ export default async function getMenuList(date, cafe = "upper-school") {
         return e.date == (formattedDate)
     })[0];
     const items = filteredDay?.menu_items || []
-    const desiredCategories = new Set(["ENTREES", "DESSERT", "SIDES"])
+    const desiredCategories = new Set(["ENTREES", "DESSERT", "SIDES", "DESSERTS"])
     const filteredItems = [];
     let categoryWanted = false;
     items.forEach(e => {
