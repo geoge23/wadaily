@@ -75,7 +75,7 @@ function ScheduleItem(props) {
             {props.number != props.length ? <line x1="12.5" y1="40" x2="12.5" y2="80" style={{stroke: betweenTime[2], strokeWidth: 3}}></line> : null}
             <circle cx="12.5" cy="40" r="6" fill={betweenTime[1]}></circle>
         </svg>
-        <div>
+        <div className="animate-slide-in">
             <p className={"text-3xl font-medium"} suppressHydrationWarning>{ctx.preferences.classNames?.[props.code] ?? props.name}</p>
             <p>{props.startTime} to {props.endTime}</p>
         </div>

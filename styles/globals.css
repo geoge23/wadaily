@@ -84,6 +84,10 @@ a {
   border-radius: 10px;
 }
 
+.animate-slide-in {
+  animation: entrance 0.2s ease-in-out;
+}
+
 @keyframes animate-text-bg {
   0% {
     background-position: 0 0;
