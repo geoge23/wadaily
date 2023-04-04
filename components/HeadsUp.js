@@ -5,6 +5,7 @@ export function HeadsUp({ children, id, title, text, isVisible = true, action = 
 
     function hide() {
         localStorage.setItem(`dismissed-headsup-${id}`, true);
+        gtag('event', 'dismissed_headsup', { id })
         setHidden(true);
     }
 
@@ -23,6 +24,7 @@ export function HeadsUp({ children, id, title, text, isVisible = true, action = 
             <div className='flex'>
                 <button className='bg-transparent hover:bg-blue-700 hover:border-opacity-0 transition border text-white rounded px-2 py-1 m-1' onClick={() => {
                     action();
+                    gtag('event', 'clicked_headsup', { id })
                     setHidden(true);
                 }}>{actionText}</button>
                 <button className='bg-blue-500 text-white rounded px-2 py-1 m-1' onClick={hide}>Dismiss</button>
