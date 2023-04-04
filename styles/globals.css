@@ -66,6 +66,15 @@ a {
   }
 }
 
+.scrollbar-hidden {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
 .scrollbar {
   scrollbar-width: thin;
   scrollbar-color: #6b7280 transparent;
@@ -95,6 +104,22 @@ a {
   100% {
     background-position: 100% 0;
   }
+}
+
+@keyframes scroll-text {
+  0% {
+    transform: translateY(0);
+  }
+  99% {
+    transform: translateY(-90%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.scroll-text {
+  animation: scroll-text 10s linear infinite;
 }
 
 
