@@ -8,7 +8,9 @@ export default function DaysModal({ visible, setVisible }) {
     const [classNames, setClassNames] = useState(ctx.preferences.classNames || {});
 
     function save() {
-        ctx.updatePreferences({ classNames })
+        //prevents users from saving empty class names
+        const safeClassNames = Object.values(classNames).filter(e => e).reduce((acc, e) => ({ ...acc, [e]: classNames[e] }), {})
+        ctx.updatePreferences({ classNames: safeClassNames })
         setVisible(false)
     }
 
