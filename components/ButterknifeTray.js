@@ -33,16 +33,17 @@ function ButterknifeArticle({image, title, url}) {
     useEffect(() => {
         if (ref.current) {
             if (ref.current.scrollHeight > ref.current.clientHeight) {
-                ref.current.classList.add("scroll-text");
+                ref.current.classList.add("hover-scroll-text");
+                ref.current.parentElement.classList.add("bottom-scroll-shadow");
             }
         }
     }, [ref])
 
-    return <a href={url} target="_blank"><div className="h-52 bg-gray-300 text-gray-600 dark:text-current dark:bg-gray-400 w-44 rounded-2xl p-4 mr-3 flex-shrink-0 mb-4">
+    return <a href={url} target="_blank"><div className="h-52 bg-gray-300 text-gray-600 dark:text-current dark:bg-gray-400 w-44 rounded-2xl p-4 mr-3 flex-shrink-0 mb-4 overflow-hidden">
         <div className="rounded-2xl h-28 w-36 relative overflow-hidden">
-            <Image src={image} alt="Butterknife Article" fill className="object-cover" />
+            <Image src={image} alt="Butterknife Article" fill className="object-cover z-20" />
         </div>
-        <div className="h-16 mt-1 overflow-hidden">
+        <div className="h-16 mt-1">
             <p className="font-semibold pb-4 h-16" ref={ref}>{title}</p>
         </div>
     </div></a>
