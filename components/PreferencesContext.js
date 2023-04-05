@@ -9,6 +9,7 @@ export function PreferencesContextComponent({children}) {
         theming: true,
         announcements: true,
         westCommons: false,
+        butterknife: true,
         classNames: {}
     })
 
