@@ -41,7 +41,8 @@ function ButterknifeArticle({image, title, url}) {
 
     return <a href={url} target="_blank"><div className="h-52 bg-gray-300 text-gray-600 dark:text-current dark:bg-gray-400 w-44 rounded-2xl p-4 mr-3 flex-shrink-0 mb-4 overflow-hidden">
         <div className="rounded-2xl h-28 w-36 relative overflow-hidden">
-            <Image src={image} alt="Butterknife Article" fill className="object-cover z-20" />
+            {/* the data URL is required, and it's just a 10x10px screenshot of the WADaily gradient */}
+            <Image src={image} placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAMAAAAMCGV4AAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAzUExURe9ER+9ESe9ETO9ET+9FUe5FVO5FV+5FWe5FXO5FX+5FYe5FZO5GZu5Gae5Ga+5GbP///36wGKQAAAABYktHRBCVsg0sAAAACXBIWXMAABJ0AAASdAHeZh94AAAAB3RJTUUH5wQFFzgkNz46twAAAB9JREFUCNdjYGBkYmZhZWPn4OTi5uHlYxhafH5S1QMA0yAGKstgLugAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjMtMDQtMDVUMjM6NTY6MzYrMDA6MDBrZ135AAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIzLTA0LTA1VDIzOjU2OjM2KzAwOjAwGjrlRQAAACh0RVh0ZGF0ZTp0aW1lc3RhbXAAMjAyMy0wNC0wNVQyMzo1NjozNiswMDowME0vxJoAAAAASUVORK5CYII=" alt="Butterknife Article" fill className="object-cover z-20" />
         </div>
         <div className="h-16 mt-1">
             <p className="font-semibold pb-4 h-16" ref={ref}>{title}</p>

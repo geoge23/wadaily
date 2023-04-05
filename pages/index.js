@@ -158,8 +158,11 @@ export default function Home(props) {
             content={calendarList}
           />
         </div>
-        <ButterknifeTray articles={props.butterknifeArticles} />
-      </> : <NoSchool />}
+      </> : <>
+        <NoSchool />
+      </>}
+      
+      <ButterknifeTray articles={props.butterknifeArticles} />
 
       <Footer />
     </div>
