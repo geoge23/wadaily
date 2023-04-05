@@ -20,6 +20,8 @@ import getScheduleDay from "../functions/day";
 import getMenuList from "../functions/menuList";
 import getScheduleList from "../functions/schedule";
 import getWeather from "../functions/weather";
+import ButterknifeTray from "../components/ButterknifeTray";
+import getButterknifeArticles from "../functions/butterknife";
 
 export default function Home(props) {
   const [schedule, setSchedule] = useState(props.schedule);
@@ -156,6 +158,7 @@ export default function Home(props) {
             content={calendarList}
           />
         </div>
+        <ButterknifeTray articles={props.butterknifeArticles} />
       </> : <NoSchool />}
 
       <Footer />
@@ -171,6 +174,7 @@ export async function getServerSideProps(ctx) {
   const weather = await getWeather();
   const menuList = await getMenuList();
   const calendarList = await getCalendarList();
+  const butterknifeArticles = await getButterknifeArticles();
   
   return {
     props: {
@@ -178,7 +182,8 @@ export async function getServerSideProps(ctx) {
       ...weather,
       menuList,
       date,
-      calendarList
+      calendarList,
+      butterknifeArticles,
     }
   }
 }

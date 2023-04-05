@@ -10,6 +10,7 @@
   "dependencies": {
     "@azure/communication-email": "^1.0.0-beta.1",
     "@passwordless-id/webauthn": "^1.2.0",
+    "cheerio": "^1.0.0-rc.12",
     "git-revision-webpack-plugin": "^5.0.0",
     "mongoose": "^6.9.0",
     "next": "^13.1.5",
@@ -18,6 +19,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.3.1",
+    "rss-parser": "^3.12.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

@@ -19,8 +19,8 @@ export default function SettingsModal({visible, setVisible}) {
                 <Checkbox text="Holiday Theming" checked={ctx.preferences.theming} onChange={() => ctx.updatePreferences({theming: !ctx.preferences.theming})}>
                     Show themes and additions for the holidays.
                 </Checkbox>
-                <Checkbox text="Upload Analytics" checked={true} onChange={() => {alert("Feature not supported!")}}>
-                    Opt out of analytics for service improvement. Not recommended to change.
+                <Checkbox text="Show Butterknife news" checked={ctx.preferences.butterknife} onChange={() => {ctx.updatePreferences({butterknife: !ctx.preferences.butterknife})}}>
+                    Show news from the Butterknife on your WADaily homepage
                 </Checkbox>
                 <Checkbox text="Show School-Wide Announcements" checked={ctx.preferences.announcements} onChange={() => ctx.updatePreferences({announcements: !ctx.preferences.announcements})}>
                     Show or hide announcements that appear as modal messages. Not recommended to change.
