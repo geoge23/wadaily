@@ -30,7 +30,7 @@ export default function Hero({day, isDifferentDay = false, widescreen = false, t
             <WidescreenDateText></WidescreenDateText>
         </div> : <div className={"md:mt-0 mt-2 md:text-right"}>
             <Countdown 
-                endDate={new Date("2023-04-25T15:15:00+0000")} 
+                endDate={new Date("2023-04-25T19:15:00.000Z")} 
                 title="Seniors' Last Day"
                 completeMessage="✨ Congrats to the class of &apos;23!"
             />
