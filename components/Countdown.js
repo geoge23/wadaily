@@ -5,6 +5,8 @@ export default function Countdown({ endDate, title, completeMessage }) {
     const [timeElapsed, setTimeElapsed] = useState(false)
 
     useEffect(() => {
+        const interval = setInterval(calculateTimeElapsed, 1000)
+
         function calculateTimeElapsed() {
             const now = new Date()
             const difference = endDate - now
@@ -21,9 +23,8 @@ export default function Countdown({ endDate, title, completeMessage }) {
                 clearInterval(interval)
             }
         }
-        
+
         calculateTimeElapsed()
-        const interval = setInterval(calculateTimeElapsed, 1000)
         
         return () => clearInterval(interval)
     }, [endDate])
