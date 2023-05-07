@@ -146,4 +146,18 @@ a {
   transform: translateY(100%);
 }
 
+.image-switcher:hover>img {
+  transition: all 0.3s ease-in-out;
+}
+
+.image-switcher:hover>img:first-child {
+  opacity: 0;
+  height: 0;
+}
+
+.image-switcher:hover>img:last-child {
+  opacity: 1;
+  height: 3.5rem;
+}
+
 

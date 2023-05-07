@@ -1,40 +1,20 @@
-import { useEffect, memo, useRef, useContext } from "react"
-import Countdown from "./Countdown";
-import { PreferencesContext } from "./PreferencesContext"
-import WeatherIcon from "./WeatherIcon"
-import WidescreenDateText from "./WidescreenDateText";
+import { useEffect, memo, useRef } from "react"
 
-export default function Hero({day, isDifferentDay = false, widescreen = false, temp, icon}) {
+export default function Hero({day, isDifferentDay = false}) {
     const ref = useRef(null)
-    const ctx = useContext(PreferencesContext)
 
     return (<div name="home" className={`
         justify-between box-border
         items-end shadow-lg flex bg-gradient-to-r 
         dark-bg-none dark:bg-gray-500
         w-full relative overflow-hidden
-        ${widescreen ? "w-screen z-50 left-0 top-0 h-52 py-7 px-20 sticky": "rounded-2xl h-56 py-5 px-6"}
-        ${false ? "from-blue-200 to-blue-500" : "from-yellow-400 via-red-500 to-pink-500" }
+        rounded-2xl h-56 py-5 px-6
+        from-yellow-400 via-red-500 to-pink-500
     `} ref={ref}>
         <div className="z-10">
             <p className={"text-white text-2xl font-light tracking-wider"}>{isDifferentDay ? "This day is a" : "Today is a"}</p>
             <p className={"text-white text-4xl md:text-6xl font-bold"}>{day}</p>
-            {widescreen && <div className={"flex flex-row mt-3"}>
-                <div className={"py-1 px-2"}>
-                    <WeatherIcon icon={icon}></WeatherIcon>
-                </div>
-                <p className={"text-white text-lg font-light tracking-wider py"}>{temp}°F • College Park</p>
-            </div>}
         </div>
-        {widescreen ? <div className={"md:mt-0 mt-2"}>
-            <WidescreenDateText></WidescreenDateText>
-        </div> : <div className={"md:mt-0 mt-2 md:text-right"}>
-            <Countdown 
-                endDate={new Date("2023-04-25T19:15:00.000Z")} 
-                title="Seniors' Last Day"
-                completeMessage="✨ Congrats to the class of &apos;23!"
-            />
-        </div>}
         {/* {ctx.preferences.theming && <Leaves divRef={ref} />} */}
     </div>)
 }
@@ -69,6 +49,6 @@ const Leaves = memo(function Leaves({divRef}) {
     }
 
     return (<div className="absolute top-0 left-0 w-full">
-        {Array.from({length: 20}).map((e, i) => <Leaf key={i} />)}
+        {Array.from({length: 20}).map((_, i) => <Leaf key={i} />)}
     </div>)
 })

@@ -5,11 +5,13 @@
         "comments": false,
         "strings": true
     },
-    "discord.enabled": true,
     "cSpell.words": [
         "Butterknife",
         "thebutterknifewa",
         "Verifys",
         "wadaily"
-    ]
+    ],
+    "workbench.colorCustomizations": {
+        "editorUnnecessaryCode.border": "#ff0000",
+    }
 }

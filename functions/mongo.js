@@ -86,55 +86,9 @@ const AnnouncementSchema = new mongoose.Schema({
 
 const Announcements = mongoose.models.announcements || mongoose.model('announcements', AnnouncementSchema)
 
-const UserSchema = new mongoose.Schema({
-    name: String,
-    email: {
-        type: String,
-        unique: true
-    },
-    studentId: {
-        type: String,
-        unique: true,
-        required: true
-    },
-    preferences: {
-        type: Object,
-        required: true,
-        default: {}
-    },
-    emailVerified: {
-        type: Boolean,
-        required: true,
-        default: false
-    }
-}, {minimize: false})
-
-const Users = mongoose.models.users || mongoose.model('users', UserSchema)
-
-const VerifySchema = new mongoose.Schema({
-    studentId: {
-        type: String,
-        required: true
-    },
-    challenge: {
-        type: String,
-        required: true
-    },
-    date: {
-        type: Date,
-        required: true,
-        default: Date.now,
-        expires: 7200 /* 2 hours */
-    },
-})
-
-const Verifys = mongoose.models.verifys || mongoose.model('verifys', VerifySchema)
-
 export {
     Days,
     Schedules,
     Notifications,
-    Announcements,
-    Users,
-    Verifys
+    Announcements
 };

@@ -8,20 +8,17 @@ import Header from "../components/Header";
 import Hero from "../components/Hero";
 import List from "../components/List";
 import Loader from "../components/Loader";
-import LoginModal from "../components/LoginModal";
 import NoSchool from "../components/NoSchool";
 import NotificationModal from "../components/NotificationModal";
 import { PreferencesContext } from "../components/PreferencesContext";
 import RadioSelector from "../components/RadioSelector";
 import Schedule from "../components/Schedule";
-import WeatherBar from "../components/WeatherBar";
+import ControlBar from "../components/ControlBar";
 import getCalendarList from "../functions/calendar";
 import getScheduleDay from "../functions/day";
 import getMenuList from "../functions/menuList";
 import getScheduleList from "../functions/schedule";
 import getWeather from "../functions/weather";
-import ButterknifeTray from "../components/ButterknifeTray";
-import getButterknifeArticles from "../functions/butterknife";
 
 export default function Home(props) {
   const [schedule, setSchedule] = useState(props.schedule);
@@ -116,20 +113,18 @@ export default function Home(props) {
         isDifferentDay={date != props.date} 
       />
 
-      <WeatherBar 
-        temp={props.temp} 
-        icon={props.icon} 
+      <ControlBar 
         date={date} 
         forward={() => progressByDays(1)} 
         back={() => progressByDays(-1)} 
+        reset={() => {
+          setLoading(true);
+          updateUI(new Date())
+        }}
+        propsDate={props.date}
       />
 
       <NotificationModal />
-
-      {date == props.date ? null : <p className="text-center mb-4 mt-0">You are viewing info for {date} • <a className="cursor-pointer underline" onClick={() => {
-        setLoading(true);
-        updateUI(new Date())
-      }}>See Today</a></p>}
 
       {friendlyName != "No School Day" ?
       <>
@@ -161,15 +156,13 @@ export default function Home(props) {
       </> : <>
         <NoSchool />
       </>}
-      
-      <ButterknifeTray articles={props.butterknifeArticles} />
 
       <Footer />
     </div>
   )
 }
 
-export async function getServerSideProps(ctx) {
+export async function getServerSideProps() {
   const Now = new Date();
   const date = `${Now.getMonth() + 1}-${Now.getDate()}-${Now.getFullYear() % 100}`
   const day = await getScheduleDay(date);
@@ -177,7 +170,6 @@ export async function getServerSideProps(ctx) {
   const weather = await getWeather();
   const menuList = await getMenuList();
   const calendarList = await getCalendarList();
-  const butterknifeArticles = await getButterknifeArticles();
   
   return {
     props: {
@@ -186,7 +178,6 @@ export async function getServerSideProps(ctx) {
       menuList,
       date,
       calendarList,
-      butterknifeArticles,
     }
   }
 }

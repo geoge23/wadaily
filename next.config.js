@@ -16,9 +16,6 @@ module.exports = {
       }
     ]
   },
-  images: {
-    domains: ["thebutterknifewa.files.wordpress.com"],
-  },
   webpack: (
     config,
     { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }
@@ -30,7 +27,6 @@ module.exports = {
       COMMIT_HASH: JSON.stringify(gitRevisionPlugin.commithash()),
       BRANCH: JSON.stringify(gitRevisionPlugin.branch()),
       LAST_COMMIT_DATE_TIME: JSON.stringify(gitRevisionPlugin.lastcommitdatetime()),
-      COPYRIGHT_YEAR: (new Date()).getFullYear()
     }))
     return config
   },
